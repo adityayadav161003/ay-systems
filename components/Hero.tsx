@@ -1,72 +1,57 @@
 "use client"
 
-import { motion } from "framer-motion"
+import Image from "next/image"
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center px-10">
+    <section className="relative min-h-screen flex items-center px-8 lg:px-24">
 
-      {/* Content Wrapper */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full items-center">
+      <div className="grid lg:grid-cols-2 gap-16 items-center w-full">
 
-        {/* LEFT SIDE — TEXT */}
-        <div>
+        {/* LEFT SIDE — ICONIC IDENTITY */}
+        <div className="space-y-10">
 
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-6xl md:text-8xl font-bold tracking-tight leading-none
-                       bg-gradient-to-b from-white to-gray-400
-                       bg-clip-text text-transparent"
-          >
-            ADITYA
-            <br />
-            YADAV
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="mt-6 text-lg text-gray-400 tracking-wide"
-          >
-            Engineering v1.0 • Building Systems That Evolve
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="mt-6 max-w-xl text-gray-500 leading-relaxed"
-          >
-            A disciplined engineering journey documenting growth, structure,
-            and iteration. Focused on building scalable systems, thoughtful
-            interfaces, and meaningful software.
-          </motion.p>
-
-          <div className="mt-10 text-sm text-gray-600 tracking-widest">
-            SCROLL ↓
+          <div className="leading-none">
+            <h1 className="text-[80px] md:text-[120px] font-extrabold tracking-tight bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
+              ADITYA
+            </h1>
+            <h1 className="text-[80px] md:text-[120px] font-extrabold tracking-tight bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
+              YADAV
+            </h1>
           </div>
-        </div>
 
-        {/* RIGHT SIDE — META SPHERE */}
-        <div className="flex justify-center md:justify-end">
+          <p className="text-lg text-gray-400 max-w-xl leading-relaxed">
+            Engineering v1.0 — Building scalable systems,
+            thoughtful interfaces, and meaningful digital experiences.
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            whileHover={{ scale: 1.05 }}
-            className="w-64 h-64 md:w-80 md:h-80 rounded-full
-                       bg-gradient-to-br from-gray-700 to-gray-900
-                       border border-white/10
-                       shadow-[0_0_60px_rgba(255,255,255,0.05)]
-                       transition-transform duration-300"
-          />
+          <p className="text-sm text-gray-600 tracking-widest uppercase">
+            Scroll ↓
+          </p>
 
         </div>
+
+        {/* RIGHT SIDE — CIRCULAR AVATAR */}
+        <div className="flex justify-center lg:justify-end">
+
+          <div className="relative w-[360px] h-[360px] rounded-full overflow-hidden border border-gray-800 shadow-2xl animate-float hover:scale-105 transition duration-500">
+
+
+
+            <Image
+              src="/meta-avatar.png"
+              alt="Aditya Yadav"
+              fill
+              priority
+              className="object-cover object-top"
+            />
+
+          </div>
+
+        </div>
+
       </div>
+
     </section>
   )
 }

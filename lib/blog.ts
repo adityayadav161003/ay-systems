@@ -7,6 +7,8 @@ import html from "remark-html"
 const postsDirectory = path.join(process.cwd(), "content/blog")
 
 export function getAllPosts() {
+  if (!fs.existsSync(postsDirectory)) return []
+
   const fileNames = fs.readdirSync(postsDirectory)
 
   return fileNames.map((fileName) => {
@@ -17,16 +19,22 @@ export function getAllPosts() {
 
     return {
       slug,
-      title: data.title,
-      description: data.description,
+      title: data.title ?? "Untitled",
+      description: data.description ?? "",
     }
   })
 }
 
 export async function getPostBySlug(slug: string) {
-  const fullPath = path.join(postsDirectory, `${slug}.md`)
-  const fileContents = fs.readFileSync(fullPath, "utf8")
+  if (!slug) return null
 
+  const fullPath = path.join(postsDirectory, `${slug}.md`)
+
+  if (!fs.existsSync(fullPath)) {
+    return null
+  }
+
+  const fileContents = fs.readFileSync(fullPath, "utf8")
   const { data, content } = matter(fileContents)
 
   const processedContent = await remark()
@@ -37,7 +45,7 @@ export async function getPostBySlug(slug: string) {
 
   return {
     slug,
-    title: data.title,
+    title: data.title ?? "Untitled",
     contentHtml,
   }
 }

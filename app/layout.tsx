@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
-export const metadata: Metadata = {
-  title: "Aditya Yadav | Engineering Systems",
-  description:
-    "Engineering v1.0 — Building scalable systems, thoughtful interfaces, and meaningful software.",
-}
+export const metadata = {
+  title: "Aditya Yadav — Engineering Systems",
+  description: "Building structured, scalable and meaningful digital systems.",
+};
+
 
 export default function RootLayout({
   children,
