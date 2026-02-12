@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+<img src="https://ay-systems-iota.vercel.app/meta-avatar.png" width="160" />
 
-First, run the development server:
+# AY Systems
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Intelligent Systems Engineering — v1.0
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Designing scalable, data-driven web architectures powered by machine learning and structured thinking.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+[Live Website](https://ay-systems-iota.vercel.app) • 
+[LinkedIn](https://www.linkedin.com/in/aditya-yadav-570846289/) • 
+[GitHub](https://github.com/adityayadav161003)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+</div>
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 About This Project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+AY Systems is not just a portfolio.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+It is a versioned engineering identity.
 
-## Deploy on Vercel
+Built to showcase:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Full Stack Engineering
+- Machine Learning Systems
+- Data Architecture Thinking
+- Structured system design
+- Real-world project case studies
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project evolves continuously as part of a long-term career leverage strategy.
+
+---
+
+## 🧠 Core Philosophy
+
+> Build systems.  
+> Document thinking.  
+> Ship iteratively.  
+> Improve relentlessly.
+
+This repository reflects disciplined engineering progression.
+
+---
+
+## 🛠 Tech Stack
+
+- Next.js 16
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Markdown-powered blog system
+- Vercel Deployment
+
+---
+
+## 📂 Architecture Overview
+
+
+Structured. Modular. Scalable.
+
+---
+
+## ✨ Features
+
+- Iconic identity-first hero section
+- Custom 3D meta avatar integration
+- Responsive glass-style navigation
+- Dynamic markdown blog system
+- Capability-based system positioning
+- Clean dark premium UI
+- Fully deployed on Vercel
+
+---
+
+## 🔮 Roadmap
+
+Planned upgrades:
+
+- Advanced system case study breakdowns
+- GitHub activity integration
+- Scroll-based section highlighting
+- Performance analytics
+- Versioned engineering documentation
+- Resume integration layer
+
+---
+
+## 📈 Vision
+
+This project is designed to evolve into:
+
+> A career leverage platform.  
+> A structured engineering operating system.  
+> A public proof of capability.
+
+Version 1.0 is live.  
+Iteration continues.
+
+---
+
+## 🧑‍💻 Author
+
+Aditya Yadav  
+Intelligent Systems Engineer  
+
+Email: adity6946@gmail.com  
+Phone: +91 8318570426  
+
+---
+
+## ⚡ Deployment
+
+Deployed on Vercel  
+Live at:  
+https://ay-systems-iota.vercel.app
+
+---
+
+© 2026 Aditya Yadav — Engineering Systems v1.0
