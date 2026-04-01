@@ -27,6 +27,15 @@ html {
   50% { transform: translateY(-10px); }
 }
 
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite;
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
