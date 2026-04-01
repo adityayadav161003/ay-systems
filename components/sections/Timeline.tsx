@@ -9,8 +9,9 @@ const timeline = [
     date: "Summer 2024",
     icon: <Briefcase className="text-blue-400" size={24} />,
     description: [
-      "Built a fraud transaction classification model with 85-90% accuracy.",
-      "Worked on preprocessing, feature engineering, model training, evaluation, and iterative tuning."
+      "Built and evaluated a fraud transaction classification model (~85–90% accuracy) using scikit-learn.",
+      "Owned the workflow end-to-end: preprocessing, feature engineering, training, evaluation, and iterative tuning.",
+      "Compared approaches with clear metrics and refined based on error patterns."
     ]
   },
   {
@@ -20,7 +21,7 @@ const timeline = [
     icon: <GraduationCap className="text-purple-400" size={24} />,
     description: [
       "Current CGPA: 7.0/10",
-      "Focused on ML, Data Structures, and System Design."
+      "Relevant coursework: Probability & Statistics, Linear Algebra, DBMS, Operating Systems, ML fundamentals."
     ]
   },
   {
@@ -30,7 +31,8 @@ const timeline = [
     icon: <Award className="text-emerald-400" size={24} />,
     description: [
       "Synergy Coordinator, Entrepreneurship Cell",
-      "General Secretary, CSED Club"
+      "General Secretary, CSED Club",
+      "Supported coordination, communication, and event execution across student teams."
     ]
   },
   {
@@ -52,13 +54,13 @@ export default function Timeline() {
         <div className="text-center md:text-left space-y-4">
           <div className="flex items-center justify-center md:justify-start gap-3 text-emerald-400 font-bold tracking-[0.2em] uppercase text-xs">
             <History size={16} />
-            <span>My Career Path</span>
+            <span>Experience & Leadership</span>
           </div>
           <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white">
-            Engineering <span className="text-white/40 italic">Journey.</span>
+            Career <span className="text-white/40 italic">Timeline.</span>
           </h2>
           <p className="text-gray-400 max-w-2xl text-lg leading-relaxed mx-auto md:ml-0">
-            A track record of hands-on learning, practical building, and leadership in the tech community.
+            A focused path: hands-on ML work, a strong CS foundation, and leadership on campus.
           </p>
         </div>
 

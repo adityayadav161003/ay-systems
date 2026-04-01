@@ -4,14 +4,9 @@ import SectionWrapper from "@/components/SectionWrapper"
 import { AnimatePresence, motion } from "framer-motion"
 import {
   Braces,
-  Brain,
   CalendarDays,
   Check,
-  ChevronLeft,
-  ChevronRight,
   Cpu,
-  Eye,
-  Moon,
   MousePointerClick,
   Palette,
   Sparkles,
@@ -99,6 +94,13 @@ function applyTheme(themeId: ThemeId, backgroundFxEnabled: boolean) {
   root.setAttribute("data-ay-theme", themeId)
 }
 
+function dayKey(d: Date) {
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, "0")
+  const day = String(d.getDate()).padStart(2, "0")
+  return `${y}-${m}-${day}`
+}
+
 function Card({
   title,
   subtitle,
@@ -165,7 +167,6 @@ function ThemePanelCard() {
       title="Theme"
       subtitle="Curated palettes for a premium dark UI."
       icon={<Palette className="w-5 h-5 text-[rgb(var(--ay-accent-rgb))]" />}
-      className="h-full"
     >
       <div className="rounded-[2rem] border border-white/10 bg-black/30 overflow-hidden">
         <div
@@ -263,25 +264,50 @@ function ThemePanelCard() {
 }
 
 function ClickCounterCard() {
-  const [count, setCount] = useLocalStorageState<number>("ay_clicks", 0)
+  const [pulse, setPulse] = useState<number>(() => 420 + Math.floor(Math.random() * 60))
   const [pulseKey, setPulseKey] = useState(0)
+  const channelRef = useRef<BroadcastChannel | null>(null)
 
-  const onClick = () => {
-    setCount((c) => c + 1)
-    setPulseKey((k) => k + 1)
-  }
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    if ("BroadcastChannel" in window) {
+      const bc = new BroadcastChannel("ay_pulse")
+      channelRef.current = bc
+      bc.onmessage = (event) => {
+        const data = event.data as { type?: string; delta?: number } | null
+        if (!data || data.type !== "pulse") return
+        const delta = typeof data.delta === "number" ? data.delta : 0
+        if (!Number.isFinite(delta) || delta <= 0) return
+        setPulse((p) => p + Math.floor(delta))
+        setPulseKey((k) => k + 1)
+      }
+    }
 
-  const onReset = () => {
-    setCount(0)
+    const id = window.setInterval(() => {
+      const backgroundDelta = 1 + Math.floor(Math.random() * 2)
+      setPulse((p) => p + backgroundDelta)
+      setPulseKey((k) => k + 1)
+    }, 4200)
+
+    return () => {
+      window.clearInterval(id)
+      channelRef.current?.close()
+      channelRef.current = null
+    }
+  }, [])
+
+  const sendPulse = (delta: number) => {
+    const safe = Math.max(1, Math.min(9, Math.floor(delta)))
+    setPulse((p) => p + safe)
     setPulseKey((k) => k + 1)
+    channelRef.current?.postMessage({ type: "pulse", delta: safe })
   }
 
   return (
     <Card
-      title="Click Counter"
-      subtitle="A small ritual: ship the next interaction."
+      title="Interaction Pulse"
+      subtitle="A live signal (simulated) that reacts to input."
       icon={<MousePointerClick className="w-5 h-5 text-[rgb(var(--ay-accent-rgb))]" />}
-      className="h-full"
     >
       <div className="flex items-end justify-between gap-6">
         <div className="space-y-2">
@@ -292,15 +318,15 @@ function ClickCounterCard() {
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="text-5xl md:text-6xl font-black tracking-tighter text-white"
           >
-            {count}
+            {pulse}
           </motion.div>
           <div className="text-xs text-white/55 font-medium">
-            You’ve clicked <span className="text-white/80 font-black">{count}</span> times
+            Current level <span className="text-white/80 font-black">{pulse}</span>
           </div>
         </div>
         <div className="flex flex-col gap-3 items-end">
           <button
-            onClick={onClick}
+            onClick={() => sendPulse(3)}
             className="px-5 py-3 rounded-2xl border font-black text-xs uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5"
             style={{
               borderColor: "rgb(var(--ay-accent-rgb) / 0.35)",
@@ -308,13 +334,13 @@ function ClickCounterCard() {
               boxShadow: "0 0 28px rgb(var(--ay-glow-rgb) / 0.18)",
             }}
           >
-            Click Me
+            Pulse
           </button>
           <button
-            onClick={onReset}
+            onClick={() => sendPulse(1)}
             className="text-[10px] font-black uppercase tracking-[0.25em] text-white/45 hover:text-white/70 transition-colors"
           >
-            Reset
+            Light Pulse
           </button>
         </div>
       </div>
@@ -324,7 +350,7 @@ function ClickCounterCard() {
 
 function CalendarWidgetCard() {
   const [today, setToday] = useState(() => new Date())
-  const [selectedIso, setSelectedIso] = useState<string>(() => new Date().toISOString())
+  const [selectedKey, setSelectedKey] = useState<string>(() => dayKey(new Date()))
 
   const dailyThoughts = useMemo(
     () => [
@@ -342,7 +368,11 @@ function CalendarWidgetCard() {
   useEffect(() => {
     const id = window.setInterval(() => {
       const next = new Date()
-      setToday((prev) => (prev.toDateString() === next.toDateString() ? prev : next))
+      setToday((prev) => {
+        if (prev.toDateString() === next.toDateString()) return prev
+        setSelectedKey((k) => (k === dayKey(prev) ? dayKey(next) : k))
+        return next
+      })
     }, 30_000)
     return () => window.clearInterval(id)
   }, [])
@@ -365,9 +395,9 @@ function CalendarWidgetCard() {
   }, [startOfWeek])
 
   const selectedDate = useMemo(() => {
-    const match = days.find((d) => d.toISOString() === selectedIso)
+    const match = days.find((d) => dayKey(d) === selectedKey)
     return match ?? today
-  }, [days, selectedIso, today])
+  }, [days, selectedKey, today])
 
   const weekdayShort = selectedDate.toLocaleDateString(undefined, { weekday: "short" })
   const monthDay = selectedDate.toLocaleDateString(undefined, { month: "short", day: "numeric" })
@@ -381,9 +411,8 @@ function CalendarWidgetCard() {
   return (
     <Card
       title="Developer Calendar"
-      subtitle="Pick a day. See the thought for that day."
+      subtitle="Select a day. Get a small prompt."
       icon={<CalendarDays className="w-5 h-5 text-[rgb(var(--ay-accent-rgb))]" />}
-      className="h-full"
     >
       <div className="rounded-[2.75rem] border border-white/10 bg-black/40 overflow-hidden">
         <div className="p-6 md:p-8 space-y-6">
@@ -395,19 +424,28 @@ function CalendarWidgetCard() {
             </div>
           </div>
 
-          <div className="flex sm:grid sm:grid-cols-7 items-center gap-3 overflow-x-auto sm:overflow-visible pb-1">
+          <div className="w-full flex sm:grid sm:grid-cols-7 items-center gap-3 overflow-x-auto sm:overflow-visible pb-1">
             {days.map((d) => {
-              const iso = d.toISOString()
-              const isSelected = iso === selectedIso
+              const key = dayKey(d)
+              const isSelected = key === selectedKey
+              const isToday = key === dayKey(today)
               const dayName = d.toLocaleDateString(undefined, { weekday: "short" }).toUpperCase()
               const num = d.getDate()
 
               return (
                 <button
-                  key={iso}
-                  onClick={() => setSelectedIso(iso)}
-                  className="relative shrink-0 sm:shrink sm:w-full rounded-2xl px-4 py-3 border border-white/10 bg-white/5 hover:bg-white/10 transition-colors min-w-[76px]"
+                  key={key}
+                  onClick={() => setSelectedKey(key)}
+                  className="relative shrink-0 sm:shrink sm:w-full rounded-2xl px-4 py-3 border bg-white/5 hover:bg-white/10 transition-colors min-w-[76px]"
                   aria-pressed={isSelected}
+                  style={{
+                    borderColor: isSelected
+                      ? "rgba(255,255,255,0.18)"
+                      : isToday
+                        ? "rgb(var(--ay-accent-rgb) / 0.38)"
+                        : "rgba(255,255,255,0.10)",
+                    boxShadow: !isSelected && isToday ? "0 0 22px rgb(var(--ay-glow-rgb) / 0.12)" : undefined,
+                  }}
                 >
                   {isSelected ? (
                     <motion.div
@@ -430,11 +468,24 @@ function CalendarWidgetCard() {
                           ? "text-[10px] font-black uppercase tracking-[0.25em]"
                           : "text-[10px] font-black uppercase tracking-[0.25em] text-white/55"
                       }
-                      style={isSelected ? { color: "rgb(var(--ay-accent-rgb))" } : undefined}
+                      style={
+                        isSelected
+                          ? { color: "rgb(var(--ay-accent-rgb))" }
+                          : isToday
+                            ? { color: "rgb(var(--ay-accent-rgb) / 0.95)" }
+                            : undefined
+                      }
                     >
                       {dayName}
                     </div>
                   </div>
+                  {!isSelected && isToday ? (
+                    <div
+                      className="absolute top-2 right-2 w-2 h-2 rounded-full"
+                      style={{ background: "rgb(var(--ay-accent-rgb) / 0.85)" }}
+                      aria-hidden="true"
+                    />
+                  ) : null}
                 </button>
               )
             })}
@@ -446,7 +497,7 @@ function CalendarWidgetCard() {
             <div className="w-5 h-5 rounded-full border border-white/20 bg-black/40" />
             <AnimatePresence mode="wait">
               <motion.div
-                key={selectedIso}
+                key={selectedKey}
                 initial={{ opacity: 0, y: 8, filter: "blur(6px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
@@ -463,76 +514,189 @@ function CalendarWidgetCard() {
   )
 }
 
-function MiniCarouselCard() {
-  const slides = useMemo(
-    () => [
-      { title: "Python", icon: <Braces className="w-6 h-6 text-[rgb(var(--ay-accent-rgb))]" />, caption: "Fast prototyping to production ML." },
-      { title: "Computer Vision", icon: <Eye className="w-6 h-6 text-emerald-400" />, caption: "Gesture-driven interfaces and real-time vision." },
-      { title: "ML Systems", icon: <Cpu className="w-6 h-6 text-purple-400" />, caption: "Pipelines, orchestration, and evaluation." },
-      { title: "Analytics", icon: <Brain className="w-6 h-6 text-blue-400" />, caption: "EDA to insights that drive decisions." },
-      { title: "Nebula Mode", icon: <Moon className="w-6 h-6 text-pink-300" />, caption: "Dark UI with subtle glow and rhythm." },
-    ],
-    []
-  )
+function PipelineBuilderCard() {
+  const [scaling, setScaling] = useState<"off" | "standard">("standard")
+  const [encoding, setEncoding] = useState<"onehot" | "ordinal">("onehot")
+  const [model, setModel] = useState<"logreg" | "rf" | "gb">("gb")
 
-  const [index, setIndex] = useState(0)
+  const estimate = useMemo(() => {
+    const baseAcc = 0.83
+    const baseLatencyMs = 18
+    const baseTrainSec = 6.0
 
-  const next = () => setIndex((i) => (i + 1) % slides.length)
-  const prev = () => setIndex((i) => (i - 1 + slides.length) % slides.length)
+    const scalingAcc = scaling === "standard" ? 0.012 : -0.004
+    const scalingLatency = scaling === "standard" ? 0.5 : 0
+    const scalingTrain = scaling === "standard" ? 0.2 : 0
+
+    const encodingAcc = encoding === "onehot" ? 0.010 : 0.004
+    const encodingLatency = encoding === "onehot" ? 1.6 : 0.6
+    const encodingTrain = encoding === "onehot" ? 1.1 : 0.6
+
+    const modelAcc = model === "logreg" ? -0.004 : model === "rf" ? 0.008 : 0.014
+    const modelLatency = model === "logreg" ? -2.2 : model === "rf" ? 5.0 : 2.6
+    const modelTrain = model === "logreg" ? -2.1 : model === "rf" ? 4.8 : 3.2
+
+    const acc = Math.max(0.75, Math.min(0.92, baseAcc + scalingAcc + encodingAcc + modelAcc))
+    const latencyMs = Math.max(6, Math.round((baseLatencyMs + scalingLatency + encodingLatency + modelLatency) * 10) / 10)
+    const trainSec = Math.max(1.2, Math.round((baseTrainSec + scalingTrain + encodingTrain + modelTrain) * 10) / 10)
+
+    return {
+      accPct: Math.round(acc * 1000) / 10,
+      latencyMs,
+      trainSec,
+    }
+  }, [encoding, model, scaling])
+
+  const steps = useMemo(() => {
+    return [
+      { label: "Data", active: true },
+      { label: "Impute", active: true },
+      { label: encoding === "onehot" ? "One-Hot" : "Ordinal", active: true },
+      { label: "Scale", active: scaling === "standard" },
+      { label: model === "logreg" ? "LogReg" : model === "rf" ? "RandomForest" : "GradientBoost", active: true },
+      { label: "Evaluate", active: true },
+      { label: "Export", active: true },
+    ] as const
+  }, [encoding, model, scaling])
 
   return (
     <Card
-      title="Doodle Carousel"
-      subtitle="Tiny icons. Small personality. Clean execution."
-      icon={<Sparkles className="w-5 h-5 text-[rgb(var(--ay-accent-rgb))]" />}
+      title="Pipeline Builder Mini"
+      subtitle="A simulated ML pipeline: flip choices and see tradeoffs."
+      icon={<Braces className="w-5 h-5 text-[rgb(var(--ay-accent-rgb))]" />}
       className="h-full"
     >
-      <div className="flex items-center justify-between gap-3">
-        <button
-          onClick={prev}
-          className="w-10 h-10 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors flex items-center justify-center"
-          aria-label="Previous"
-        >
-          <ChevronLeft className="w-5 h-5 text-white/70" />
-        </button>
-
-        <div className="flex-1">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={slides[index].title}
-              initial={{ opacity: 0, y: 12, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -12, filter: "blur(8px)" }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-[2rem] border border-white/10 bg-white/5 px-5 py-4"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl border border-white/10 bg-black/30 flex items-center justify-center">
-                  {slides[index].icon}
-                </div>
-                <div className="space-y-1">
-                  <div className="text-lg font-black text-white tracking-tight">{slides[index].title}</div>
-                  <div className="text-sm text-white/60">{slides[index].caption}</div>
-                </div>
+      <div className="rounded-[2.75rem] border border-white/10 bg-black/40 overflow-hidden">
+        <div className="p-6 md:p-8 space-y-6">
+          <div className="grid md:grid-cols-3 gap-5">
+            <div className="space-y-2">
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/45">Scaling</div>
+              <div className="flex gap-2">
+                {(["standard", "off"] as const).map((id) => {
+                  const active = scaling === id
+                  return (
+                    <button
+                      key={id}
+                      onClick={() => setScaling(id)}
+                      className={[
+                        "px-4 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-[0.25em] transition-colors",
+                        active ? "text-black" : "text-white/65 hover:text-white",
+                      ].join(" ")}
+                      style={
+                        active
+                          ? { background: "rgba(255,255,255,0.92)", borderColor: "rgba(255,255,255,0.18)" }
+                          : { background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.08)" }
+                      }
+                      aria-pressed={active}
+                    >
+                      {id === "standard" ? "Standard" : "Off"}
+                    </button>
+                  )
+                })}
               </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            </div>
 
-        <button
-          onClick={next}
-          className="w-10 h-10 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors flex items-center justify-center"
-          aria-label="Next"
-        >
-          <ChevronRight className="w-5 h-5 text-white/70" />
-        </button>
+            <div className="space-y-2">
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/45">Encoding</div>
+              <div className="flex gap-2">
+                {(["onehot", "ordinal"] as const).map((id) => {
+                  const active = encoding === id
+                  return (
+                    <button
+                      key={id}
+                      onClick={() => setEncoding(id)}
+                      className={[
+                        "px-4 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-[0.25em] transition-colors",
+                        active ? "text-black" : "text-white/65 hover:text-white",
+                      ].join(" ")}
+                      style={
+                        active
+                          ? { background: "rgba(255,255,255,0.92)", borderColor: "rgba(255,255,255,0.18)" }
+                          : { background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.08)" }
+                      }
+                      aria-pressed={active}
+                    >
+                      {id === "onehot" ? "One-hot" : "Ordinal"}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/45">Model</div>
+              <div className="flex gap-2 flex-wrap">
+                {(["logreg", "rf", "gb"] as const).map((id) => {
+                  const active = model === id
+                  const label = id === "logreg" ? "LogReg" : id === "rf" ? "RF" : "GB"
+                  return (
+                    <button
+                      key={id}
+                      onClick={() => setModel(id)}
+                      className={[
+                        "px-4 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-[0.25em] transition-colors",
+                        active ? "text-black" : "text-white/65 hover:text-white",
+                      ].join(" ")}
+                      style={
+                        active
+                          ? { background: "rgba(255,255,255,0.92)", borderColor: "rgba(255,255,255,0.18)" }
+                          : { background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.08)" }
+                      }
+                      aria-pressed={active}
+                    >
+                      {label}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[2.5rem] border border-white/10 bg-black/30 p-6 md:p-8 space-y-5">
+            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/45">Flow</div>
+            <div className="flex flex-wrap gap-2">
+              {steps.map((s) => (
+                <span
+                  key={s.label}
+                  className="px-3 py-2 rounded-2xl border text-[10px] font-black uppercase tracking-[0.2em]"
+                  style={{
+                    borderColor: s.active ? "rgb(var(--ay-accent-rgb) / 0.30)" : "rgba(255,255,255,0.08)",
+                    background: s.active ? "rgb(var(--ay-accent-rgb) / 0.10)" : "rgba(255,255,255,0.03)",
+                    color: s.active ? "rgba(255,255,255,0.78)" : "rgba(255,255,255,0.42)",
+                  }}
+                >
+                  {s.label}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4 rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-6 md:p-8">
+            <div className="space-y-1">
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/45">Accuracy</div>
+              <div className="text-2xl md:text-3xl font-black tracking-tight text-white">{estimate.accPct}%</div>
+            </div>
+            <div className="space-y-1">
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/45">Latency</div>
+              <div className="text-2xl md:text-3xl font-black tracking-tight text-white">{estimate.latencyMs} ms</div>
+            </div>
+            <div className="space-y-1">
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/45">Train</div>
+              <div className="text-2xl md:text-3xl font-black tracking-tight text-white">{estimate.trainSec}s</div>
+            </div>
+          </div>
+
+          <div className="text-xs text-white/45 font-medium leading-relaxed">
+            Simulated estimates to illustrate common tradeoffs (not tied to a specific dataset).
+          </div>
+        </div>
       </div>
     </Card>
   )
 }
 
 function InteractiveTextCard() {
-  const words = useMemo(() => ["systems", "data", "automation", "experiences"], [])
+  const words = useMemo(() => ["ML workflows", "data products", "automation", "interfaces"], [])
   const [active, setActive] = useState(0)
 
   useEffect(() => {
@@ -543,7 +707,7 @@ function InteractiveTextCard() {
   return (
     <Card
       title="Interactive Statement"
-      subtitle="A micro-interaction that fits my ML builder brand."
+      subtitle="A polished loop: timing, motion, and clarity."
       icon={<Wand2 className="w-5 h-5 text-[rgb(var(--ay-accent-rgb))]" />}
       className="h-full"
     >
@@ -580,7 +744,7 @@ function InteractiveTextCard() {
           </div>
 
           <div className="text-sm md:text-base text-white/60 max-w-2xl font-medium leading-relaxed">
-            Clean interfaces, measurable ML outcomes, and systems thinking — with just enough interaction to make the work memorable.
+            Clean interfaces and measurable outcomes — with just enough interaction to make the work memorable.
           </div>
 
           <div className="flex flex-wrap gap-3 pt-2">
@@ -715,8 +879,8 @@ function TypingGameCard() {
 
   return (
     <Card
-      title="Typing Mini-Game"
-      subtitle="Type the phrase. Watch the core react to accuracy."
+      title="Typing Drill"
+      subtitle="A compact accuracy loop with satisfying feedback."
       icon={<Cpu className="w-5 h-5 text-[rgb(var(--ay-accent-rgb))]" />}
       className="h-full"
     >
@@ -753,7 +917,7 @@ function TypingGameCard() {
                 <div className="space-y-2">
                   <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/45">Phrase</div>
                   <div className="text-white/75 font-medium leading-relaxed">
-                    {target || "Press Start to load an ML phrase."}
+                    {target || "Press Start to load a phrase."}
                   </div>
                 </div>
 
@@ -860,12 +1024,12 @@ export default function InteractiveLabSection() {
               Interactive <span className="text-white/40 italic">Lab.</span>
             </h2>
             <p className="text-gray-400 max-w-2xl text-lg leading-relaxed">
-              Playful, premium components that reflect how I think: systems-first, measurable, and built to ship.
+              A small playground for micro-interactions, feedback, and state — built with the same care as product UI.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-start">
           <div className="lg:col-span-7 lg:row-span-2">
             <InteractiveTextCard />
           </div>
@@ -883,7 +1047,7 @@ export default function InteractiveLabSection() {
           </div>
 
           <div className="lg:col-span-5">
-            <MiniCarouselCard />
+            <PipelineBuilderCard />
           </div>
 
           <div className="lg:col-span-12">

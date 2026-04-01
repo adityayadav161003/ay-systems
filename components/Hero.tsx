@@ -59,9 +59,13 @@ export default function Hero() {
               Aspiring Machine Learning Engineer <br className="hidden md:block" />
               <span className="text-blue-400 italic font-medium">& Data Analyst</span>
             </h3>
+            <div className="flex justify-center lg:justify-start">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-white/70">
+                Open to Summer 2026 ML / Data internships
+              </div>
+            </div>
             <p className="text-base md:text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Building intelligent systems with ML, computer vision, and data-driven applications. 
-              Focused on creating scalable architectures and automated workflows.
+              I build end-to-end ML workflows — from preprocessing and feature engineering to training, evaluation, and export — and I care about measurable results, clean implementation, and shipping.
             </p>
           </motion.div>
 
@@ -74,7 +78,7 @@ export default function Hero() {
             >
               <span className="relative z-10 flex items-center gap-2">
                 <Download size={18} />
-                Download Resume
+                Resume (PDF)
               </span>
               <div className="absolute right-4 translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
                 <Download size={18} />
@@ -85,12 +89,13 @@ export default function Hero() {
               {[
                 { icon: Github, href: "https://github.com/adityayadav161003", label: "GitHub" },
                 { icon: Linkedin, href: "https://www.linkedin.com/in/aditya-yadav-570846289", label: "LinkedIn" },
-                { icon: Mail, href: "mailto:adity6946@gmail.com", label: "Email" }
+                { icon: Mail, href: "mailto:adity6946@gmail.com", label: "Email" },
               ].map((social, i) => (
                 <a 
                   key={i}
                   href={social.href} 
                   target={social.href.startsWith("http") ? "_blank" : undefined}
+                  rel={social.href.startsWith("http") ? "noreferrer" : undefined}
                   className="p-3 md:p-4 border border-white/10 bg-white/[0.03] rounded-full text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
                   aria-label={social.label}
                 >
@@ -131,7 +136,7 @@ export default function Hero() {
             <div className="absolute -top-4 -right-4 p-4 bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl group-hover:-translate-y-2 transition-transform duration-500 hidden md:block">
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs font-bold text-white tracking-widest uppercase">Available for roles</span>
+                <span className="text-xs font-bold text-white tracking-widest uppercase">Open to internships</span>
               </div>
             </div>
           </div>

@@ -20,16 +20,12 @@ export default function About() {
 
           <div className="space-y-8 text-gray-400 text-lg md:text-xl leading-relaxed font-medium">
             <p>
-              I approach engineering as a system — not just code. 
-              As a B.Tech Computer Science student at GLA University, 
-              I’ve focused my journey on bridging the gap between raw data 
-              and intelligent applications.
+              I’m a B.Tech Computer Science student at GLA University who enjoys turning messy data into reliable ML workflows —
+              with clean preprocessing, measurable evaluation, and deployment-ready outputs.
             </p>
             <p>
-              My hands-on experience spans from designing automated ML pipelines 
-              to building real-time computer vision systems. I believe in 
-              disciplined thinking, rapid iteration, and creating software 
-              that delivers measurable impact.
+              I’ve worked across automated ML tooling and real-time computer vision.
+              I care about disciplined iteration, readable code, and building things that other people can actually run.
             </p>
           </div>
 
@@ -57,15 +53,15 @@ export default function About() {
           
           <div className="bg-[#050505]/60 backdrop-blur-3xl p-10 md:p-16 rounded-[3rem] border border-white/10 space-y-12 relative z-10">
             <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight italic leading-snug">
-              &ldquo;Build systems. Document thinking. Ship iteratively. Improve relentlessly.&rdquo;
+              &ldquo;Build end-to-end. Measure outcomes. Ship with clarity. Improve relentlessly.&rdquo;
             </h3>
             
             <div className="grid grid-cols-2 gap-10">
               {[
-                { value: "7.0", label: "Current CGPA" },
-                { value: "85%", label: "Avg Accuracy" },
-                { value: "20+", label: "FPS Rate" },
-                { value: "15%", label: "Efficiency Gain" }
+                { value: "June 2027", label: "Expected Graduation" },
+                { value: "CSE", label: "B.Tech (GLA)" },
+                { value: "ML Intern", label: "Intrainz Innovation" },
+                { value: "Mathura, IN", label: "Based In" },
               ].map((stat, i) => (
                 <div key={i} className="space-y-2 group/stat">
                   <span className="text-4xl font-black text-white tracking-tighter group-hover/stat:text-blue-400 transition-colors duration-300">

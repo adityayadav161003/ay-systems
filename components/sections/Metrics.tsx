@@ -3,24 +3,24 @@ import { motion } from "framer-motion"
 
 const metrics = [
   {
-    value: "85-90%",
-    label: "Classification Accuracy",
-    description: "Fraud Detection Internship Project"
+    value: "85–90%",
+    label: "Model Accuracy",
+    description: "Fraud transaction classification (internship)"
   },
   {
-    value: "20-25",
-    label: "FPS Performance",
-    description: "GestureWave CV System"
+    value: "20–25 FPS",
+    label: "Real-Time CV",
+    description: "Gesture recognition loop (webcam)"
   },
   {
     value: "15%",
-    label: "Efficiency Gain",
-    description: "AutoML Engine Optimization"
+    label: "Faster Iteration",
+    description: "Automated preprocessing + model comparison"
   },
   {
     value: "4+",
     label: "Core Projects",
-    description: "ML & System Engineering"
+    description: "ML, data, and product-quality UI"
   }
 ]
 

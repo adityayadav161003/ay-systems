@@ -6,17 +6,17 @@ const items = [
   {
     title: "Machine Learning Pipelines",
     icon: <Cpu className="text-blue-400" size={24} />,
-    description: "End-to-end automated systems for data processing and model orchestration."
+    description: "Repeatable workflows for preprocessing, training, evaluation, and export."
   },
   {
     title: "Computer Vision Systems",
     icon: <Camera className="text-emerald-400" size={24} />,
-    description: "Real-time visual processing and intuitive human-computer interfaces."
+    description: "Real-time gesture recognition with a focus on latency and stability."
   },
   {
     title: "Data Analysis Workflows",
     icon: <BarChart4 className="text-purple-400" size={24} />,
-    description: "Deep statistical exploration and impact-driven visualization of data."
+    description: "Cleaning, EDA, and clear reporting to surface useful signals."
   },
   {
     title: "Modern Web Interfaces",
@@ -41,8 +41,7 @@ export default function WhatIBuild() {
             <div className="h-1.5 w-24 bg-blue-500 rounded-full mx-auto lg:ml-0" />
           </div>
           <p className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0">
-            I approach engineering as a discipline of systems. 
-            My work focuses on bridging the gap between raw data and intelligent applications.
+            I like projects that combine engineering thinking with practical ML: clean inputs, clear evaluation, and interfaces that make the work usable.
           </p>
         </div>
 

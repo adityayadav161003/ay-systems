@@ -1,12 +1,16 @@
 ---
-title: "First Post"
-description: "Engineering reflection."
+title: Engineering Reflection
+description: What I’m optimizing for as an early-career builder.
 ---
 
-This is my first blog post.
+I’m early-career, so I optimize for fundamentals: clean inputs, reproducible experiments, and code someone else can actually run.
 
-I approach engineering as a system — not just code.
+The loop I follow:
 
-Iteration matters.  
-Structure matters.  
-Long-term thinking matters.
+- build a baseline fast
+- measure with the right metric
+- improve one variable at a time
+- document decisions and trade-offs
+- ship the next version
+
+I keep posts like this short on purpose — the goal is clarity, not hype.

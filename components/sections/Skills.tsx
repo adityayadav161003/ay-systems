@@ -6,25 +6,25 @@ const skillCards = [
   {
     title: "Machine Learning",
     icon: <Brain className="text-blue-400" size={32} />,
-    description: "Building automated pipelines and predictive models.",
+    description: "Preprocessing, feature engineering, training, and evaluation with repeatable experiments.",
     skills: ["scikit-learn", "Feature Engineering", "Model Evaluation", "AutoML"]
   },
   {
     title: "Data Analysis",
     icon: <BarChart3 className="text-purple-400" size={32} />,
-    description: "Extracting insights from complex datasets using statistical methods.",
+    description: "Cleaning datasets, running EDA, and turning findings into clear visuals and narratives.",
     skills: ["Python", "Pandas", "NumPy", "EDA", "SQL (Basic)", "Excel"]
   },
   {
     title: "Computer Vision",
     icon: <Eye className="text-emerald-400" size={32} />,
-    description: "Developing real-time vision systems and gesture recognition.",
+    description: "Real-time pipelines focused on latency, stability, and practical interaction loops.",
     skills: ["OpenCV", "MediaPipe", "Image Processing", "Vision Workflows"]
   },
   {
     title: "Web & Tools",
     icon: <Globe className="text-orange-400" size={32} />,
-    description: "Crafting modern interfaces and managing development lifecycles.",
+    description: "Product-quality UI, strong DX, and the tooling to ship reliably.",
     skills: ["JavaScript", "HTML", "CSS", "Git", "GitHub", "Next.js"]
   }
 ]
@@ -42,9 +42,29 @@ export default function Skills() {
             Technical <span className="text-white/40 italic">Arsenal.</span>
           </h2>
           <p className="text-gray-400 max-w-2xl text-lg leading-relaxed mx-auto md:ml-0">
-            A specialized stack focused on building intelligent, data-driven systems 
-            and modern digital experiences.
+            A focused toolkit for ML workflows, data analysis, computer vision, and product-quality UI.
           </p>
+        </div>
+
+        <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.02] backdrop-blur-2xl p-6 md:p-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="space-y-2">
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/55">Core Stack</div>
+              <div className="text-white/80 text-sm md:text-base font-medium leading-relaxed">
+                Python, Pandas, NumPy, scikit-learn, OpenCV, MediaPipe, Git, SQL (Basic), HTML/CSS/JS
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {["Python", "Pandas", "scikit-learn", "OpenCV", "Git", "SQL"].map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-white/70"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
