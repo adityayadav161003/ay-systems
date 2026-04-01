@@ -26,7 +26,7 @@ const metrics = [
 
 export default function Metrics() {
   return (
-    <SectionWrapper id="metrics" innerClassName="bg-transparent border-none backdrop-blur-none shadow-none p-0 md:p-0 lg:p-0">
+    <SectionWrapper id="metrics" plain noPadding>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 text-center md:text-left">
         {metrics.map((metric, index) => (
           <motion.div 

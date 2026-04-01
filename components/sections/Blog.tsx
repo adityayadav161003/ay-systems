@@ -21,7 +21,7 @@ const posts = [
 
 export default function Blog() {
   return (
-    <SectionWrapper id="blog" innerClassName="bg-transparent border-none backdrop-blur-none shadow-none p-0 md:p-0 lg:p-0">
+    <SectionWrapper id="blog" plain noPadding>
       <div className="space-y-16">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8">
           <div className="space-y-4">

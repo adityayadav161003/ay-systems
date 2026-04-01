@@ -1,7 +1,6 @@
 "use client"
 
 import { Github, Linkedin, Mail, ArrowUp, ChevronRight } from "lucide-react"
-import { motion } from "framer-motion"
 
 export default function Footer() {
   const scrollToTop = () => {

@@ -47,7 +47,7 @@ const timeline = [
 
 export default function Timeline() {
   return (
-    <SectionWrapper id="experience" innerClassName="bg-transparent border-none backdrop-blur-none shadow-none p-0 md:p-0 lg:p-0">
+    <SectionWrapper id="experience" plain noPadding>
       <div className="max-w-6xl mx-auto space-y-20">
         <div className="text-center md:text-left space-y-4">
           <div className="flex items-center justify-center md:justify-start gap-3 text-emerald-400 font-bold tracking-[0.2em] uppercase text-xs">

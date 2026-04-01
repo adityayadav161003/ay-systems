@@ -6,7 +6,7 @@ import { Github, Linkedin, Mail, Phone, Send, MessageCircle } from "lucide-react
 
 export default function Contact() {
   return (
-    <SectionWrapper id="contact" innerClassName="bg-transparent border-none backdrop-blur-none shadow-none p-0 md:p-0 lg:p-0">
+    <SectionWrapper id="contact" plain noPadding>
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}

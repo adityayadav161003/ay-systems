@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --ay-panel-rgb: 255 255 255;
+  --ay-accent-rgb: 59 130 246;
+  --ay-glow-rgb: 99 102 241;
+  --ay-panel-alpha: 0.03;
+  --ay-border-alpha: 0.10;
+  --ay-stars-opacity: 0.40;
 }
 html {
   scroll-behavior: smooth;
@@ -55,4 +61,3 @@ body {
 html {
   scroll-behavior: smooth;
 }
-

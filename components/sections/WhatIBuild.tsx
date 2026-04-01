@@ -27,7 +27,7 @@ const items = [
 
 export default function WhatIBuild() {
   return (
-    <SectionWrapper id="what-i-build" innerClassName="bg-transparent border-none backdrop-blur-none shadow-none p-0 md:p-0 lg:p-0">
+    <SectionWrapper id="what-i-build" plain noPadding>
       <div className="flex flex-col lg:flex-row gap-16 lg:items-center">
         <div className="lg:w-1/3 space-y-8 text-center lg:text-left">
           <div className="space-y-4">

@@ -4,7 +4,7 @@ import { User } from "lucide-react"
 
 export default function About() {
   return (
-    <SectionWrapper id="about" innerClassName="bg-transparent border-none backdrop-blur-none shadow-none p-0 md:p-0 lg:p-0">
+    <SectionWrapper id="about" plain noPadding>
       <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
         <div className="space-y-10">
           <div className="space-y-6">
@@ -57,7 +57,7 @@ export default function About() {
           
           <div className="bg-[#050505]/60 backdrop-blur-3xl p-10 md:p-16 rounded-[3rem] border border-white/10 space-y-12 relative z-10">
             <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight italic leading-snug">
-              "Build systems. Document thinking. Ship iteratively. Improve relentlessly."
+              &ldquo;Build systems. Document thinking. Ship iteratively. Improve relentlessly.&rdquo;
             </h3>
             
             <div className="grid grid-cols-2 gap-10">

@@ -31,7 +31,7 @@ const skillCards = [
 
 export default function Skills() {
   return (
-    <SectionWrapper id="skills" innerClassName="bg-transparent border-none backdrop-blur-none shadow-none p-0 md:p-0 lg:p-0">
+    <SectionWrapper id="skills" plain noPadding>
       <div className="space-y-16">
         <div className="text-center md:text-left space-y-4">
           <div className="flex items-center justify-center md:justify-start gap-3 text-purple-400 font-bold tracking-[0.2em] uppercase text-xs">

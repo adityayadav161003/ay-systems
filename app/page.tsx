@@ -5,26 +5,25 @@ import Hero from '@/components/Hero'
 import About from '@/components/sections/About'
 import Projects from '@/components/sections/Projects'
 import WhatIBuild from '@/components/sections/WhatIBuild'
+import InteractiveLabSection from '@/components/sections/InteractiveLab'
 import Skills from '@/components/sections/Skills'
 import Metrics from '@/components/sections/Metrics'
 import Timeline from '@/components/sections/Timeline'
 import Blog from '@/components/sections/Blog'
 import Contact from '@/components/sections/Contact'
-import GalaxyBackground from '@/components/GalaxyBackground'
 
 export default function Home() {
   return (
     <>
-      <GalaxyBackground />
-
       <main className="relative text-white overflow-hidden">
         <Hero />
         <About />
         <Metrics />
         <WhatIBuild />
+        <Timeline />
         <Projects />
         <Skills />
-        <Timeline />
+        <InteractiveLabSection />
         <Blog />
         <Contact />
         

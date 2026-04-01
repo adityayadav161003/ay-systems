@@ -7,14 +7,31 @@ interface Props {
   children: ReactNode
   id: string
   className?: string
-  innerClassName?: string
+  fullHeight?: boolean
+  plain?: boolean
+  noPadding?: boolean
 }
 
-export default function SectionWrapper({ children, id, className = "", innerClassName = "" }: Props) {
+export default function SectionWrapper({
+  children,
+  id,
+  className = "",
+  fullHeight = false,
+  plain = false,
+  noPadding = false,
+}: Props) {
+  const sectionMinHeight = fullHeight ? "min-h-screen" : "min-h-0"
+  const sectionAlign = fullHeight ? "items-center" : "items-start"
+  const sectionPaddingY = fullHeight ? "py-20 md:py-32" : "py-16 md:py-24"
+  const panelShell = plain
+    ? "bg-transparent border-none backdrop-blur-none shadow-none"
+    : "bg-white/[0.02] backdrop-blur-2xl border border-white/10 shadow-[0_0_80px_rgba(255,255,255,0.02)]"
+  const panelPadding = noPadding ? "p-0" : "p-6 md:p-16 lg:p-24"
+
   return (
     <section
       id={id}
-      className={`relative min-h-screen px-4 md:px-8 lg:px-12 py-20 md:py-32 flex items-center justify-center overflow-hidden ${className}`}
+      className={`relative ${sectionMinHeight} px-4 md:px-8 lg:px-12 ${sectionPaddingY} flex ${sectionAlign} justify-center overflow-hidden ${className}`}
     >
       <motion.div
         initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
@@ -25,17 +42,13 @@ export default function SectionWrapper({ children, id, className = "", innerClas
           delay: 0.1 
         }}
         viewport={{ once: true, margin: "-100px" }}
-        className={`
-          w-full max-w-[1440px]
-          bg-white/[0.02]
-          backdrop-blur-2xl
-          border border-white/10
-          rounded-[2.5rem] md:rounded-[4rem]
-          p-6 md:p-16 lg:p-24
-          shadow-[0_0_80px_rgba(255,255,255,0.02)]
-          relative z-10
-          ${innerClassName}
-        `}
+        className={[
+          "w-full max-w-[1440px]",
+          "rounded-[2.5rem] md:rounded-[4rem]",
+          panelShell,
+          panelPadding,
+          "relative z-10",
+        ].join(" ")}
       >
         {children}
       </motion.div>
