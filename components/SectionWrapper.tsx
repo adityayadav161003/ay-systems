@@ -43,7 +43,7 @@ export default function SectionWrapper({
         }}
         viewport={{ once: true, margin: "-100px" }}
         className={[
-          "w-full max-w-[1440px]",
+          "w-full max-w-[1240px]",
           "rounded-[2.5rem] md:rounded-[4rem]",
           panelShell,
           panelPadding,

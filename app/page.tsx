@@ -5,7 +5,7 @@ import Hero from '@/components/Hero'
 import About from '@/components/sections/About'
 import Projects from '@/components/sections/Projects'
 import WhatIBuild from '@/components/sections/WhatIBuild'
-import InteractiveLabSection from '@/components/sections/InteractiveLab'
+
 import Skills from '@/components/sections/Skills'
 import Metrics from '@/components/sections/Metrics'
 import Timeline from '@/components/sections/Timeline'
@@ -23,7 +23,7 @@ export default function Home() {
         <Timeline />
         <Projects />
         <Skills />
-        <InteractiveLabSection />
+
         <Blog />
         <Contact />
         

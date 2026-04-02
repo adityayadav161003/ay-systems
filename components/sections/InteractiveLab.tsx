@@ -62,22 +62,27 @@ const THEMES: Record<
 }
 
 function useLocalStorageState<T>(key: string, initialValue: T) {
-  const [value, setValue] = useState<T>(() => {
-    if (typeof window === "undefined") return initialValue
+  const [value, setValue] = useState<T>(initialValue)
+  const [hydrated, setHydrated] = useState(false)
+
+  // Hydrate from localStorage on mount (client only)
+  useEffect(() => {
     try {
       const raw = window.localStorage.getItem(key)
-      if (raw == null) return initialValue
-      return JSON.parse(raw) as T
-    } catch {
-      return initialValue
-    }
-  })
+      if (raw != null) {
+        setValue(JSON.parse(raw) as T)
+      }
+    } catch {}
+    setHydrated(true)
+  }, [key])
 
+  // Persist to localStorage on change (only after hydration)
   useEffect(() => {
+    if (!hydrated) return
     try {
       window.localStorage.setItem(key, JSON.stringify(value))
     } catch {}
-  }, [key, value])
+  }, [key, value, hydrated])
 
   return [value, setValue] as const
 }
@@ -264,7 +269,7 @@ function ThemePanelCard() {
 }
 
 function ClickCounterCard() {
-  const [pulse, setPulse] = useState<number>(() => 420 + Math.floor(Math.random() * 60))
+  const [pulse, setPulse] = useState<number>(420)
   const [pulseKey, setPulseKey] = useState(0)
   const channelRef = useRef<BroadcastChannel | null>(null)
 
@@ -349,6 +354,7 @@ function ClickCounterCard() {
 }
 
 function CalendarWidgetCard() {
+  const [mounted, setMounted] = useState(false)
   const [today, setToday] = useState(() => new Date())
   const [selectedKey, setSelectedKey] = useState<string>(() => dayKey(new Date()))
 
@@ -364,6 +370,10 @@ function CalendarWidgetCard() {
     ],
     []
   )
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -399,14 +409,16 @@ function CalendarWidgetCard() {
     return match ?? today
   }, [days, selectedKey, today])
 
-  const weekdayShort = selectedDate.toLocaleDateString(undefined, { weekday: "short" })
-  const monthDay = selectedDate.toLocaleDateString(undefined, { month: "short", day: "numeric" })
-  const year = selectedDate.toLocaleDateString(undefined, { year: "numeric" })
   const mondayIndex = useMemo(() => {
     const d = selectedDate.getDay()
     return (d + 6) % 7
   }, [selectedDate])
   const thought = dailyThoughts[mondayIndex] ?? dailyThoughts[0]
+
+  // Use explicit locale "en-US" to avoid server/client locale differences
+  const weekdayShort = mounted ? selectedDate.toLocaleDateString("en-US", { weekday: "short" }) : ""
+  const monthDay = mounted ? selectedDate.toLocaleDateString("en-US", { month: "short", day: "numeric" }) : ""
+  const year = mounted ? selectedDate.toLocaleDateString("en-US", { year: "numeric" }) : ""
 
   return (
     <Card
@@ -417,19 +429,19 @@ function CalendarWidgetCard() {
       <div className="rounded-[2.75rem] border border-white/10 bg-black/40 overflow-hidden">
         <div className="p-6 md:p-8 space-y-6">
           <div className="flex items-start justify-between gap-6">
-            <div className="text-4xl md:text-5xl font-black tracking-tight text-white">{weekdayShort}</div>
+            <div className="text-4xl md:text-5xl font-black tracking-tight text-white" suppressHydrationWarning>{weekdayShort}</div>
             <div className="text-right">
-              <div className="text-sm font-black text-white/80">{monthDay}</div>
-              <div className="text-xs font-black uppercase tracking-[0.25em] text-white/45">{year}</div>
+              <div className="text-sm font-black text-white/80" suppressHydrationWarning>{monthDay}</div>
+              <div className="text-xs font-black uppercase tracking-[0.25em] text-white/45" suppressHydrationWarning>{year}</div>
             </div>
           </div>
 
           <div className="w-full flex sm:grid sm:grid-cols-7 items-center gap-3 overflow-x-auto sm:overflow-visible pb-1">
-            {days.map((d) => {
+            {mounted && days.map((d) => {
               const key = dayKey(d)
               const isSelected = key === selectedKey
               const isToday = key === dayKey(today)
-              const dayName = d.toLocaleDateString(undefined, { weekday: "short" }).toUpperCase()
+              const dayName = d.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()
               const num = d.getDate()
 
               return (
@@ -513,6 +525,7 @@ function CalendarWidgetCard() {
     </Card>
   )
 }
+
 
 function PipelineBuilderCard() {
   const [scaling, setScaling] = useState<"off" | "standard">("standard")
@@ -1010,52 +1023,36 @@ function TypingGameCard() {
   )
 }
 
-export default function InteractiveLabSection() {
+export default function LabDashboard() {
   return (
-    <SectionWrapper id="lab" plain noPadding>
-      <div className="space-y-16">
-        <div className="flex flex-col md:flex-row items-end justify-between gap-8">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 text-[rgb(var(--ay-accent-rgb))] font-black tracking-[0.2em] uppercase text-xs">
-              <Sparkles size={16} />
-              <span>Micro Interactions</span>
-            </div>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white">
-              Interactive <span className="text-white/40 italic">Lab.</span>
-            </h2>
-            <p className="text-gray-400 max-w-2xl text-lg leading-relaxed">
-              A small playground for micro-interactions, feedback, and state — built with the same care as product UI.
-            </p>
-          </div>
+    <div className="w-full max-w-[1440px] mx-auto pb-32">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+        
+        {/* ROW 1: Typing Game & Interactive Text */}
+        <div className="lg:col-span-7">
+          <TypingGameCard />
+        </div>
+        <div className="lg:col-span-5">
+          <InteractiveTextCard />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-start">
-          <div className="lg:col-span-7 lg:row-span-2">
-            <InteractiveTextCard />
-          </div>
+        {/* ROW 2: ML Pipeline Full Banner */}
+        <div className="lg:col-span-12">
+          <PipelineBuilderCard />
+        </div>
 
-          <div className="lg:col-span-5 lg:row-span-2 lg:sticky lg:top-28 self-start">
-            <TypingGameCard />
-          </div>
-
-          <div className="lg:col-span-4">
-            <ThemePanelCard />
-          </div>
-
-          <div className="lg:col-span-3">
-            <ClickCounterCard />
-          </div>
-
-          <div className="lg:col-span-5">
-            <PipelineBuilderCard />
-          </div>
-
-          <div className="lg:col-span-12">
-            <CalendarWidgetCard />
-          </div>
+        {/* ROW 3: Lower Widgets */}
+        <div className="lg:col-span-5">
+          <ThemePanelCard />
+        </div>
+        <div className="lg:col-span-4">
+          <CalendarWidgetCard />
+        </div>
+        <div className="lg:col-span-3">
+          <ClickCounterCard />
         </div>
       </div>
-    </SectionWrapper>
+    </div>
   )
 }
 

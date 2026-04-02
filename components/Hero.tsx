@@ -27,12 +27,12 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center px-4 md:px-8 lg:px-24 overflow-hidden pt-20 md:pt-0">
+    <section className="relative min-h-screen flex items-center px-4 md:px-8 lg:px-24 overflow-hidden pt-[120px] md:pt-[160px] lg:pt-[180px]">
       <motion.div 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center w-full max-w-[1440px] mx-auto"
+        className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center w-full max-w-[1240px] mx-auto"
       >
         {/* LEFT SIDE — ICONIC IDENTITY */}
         <div className="space-y-6 md:space-y-10 relative z-10 order-2 lg:order-1 text-center lg:text-left">
@@ -127,6 +127,7 @@ export default function Hero() {
                 src="/meta-avatar.png"
                 alt="Aditya Yadav"
                 fill
+                sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, (max-width: 1024px) 400px, 460px"
                 priority
                 className="object-cover object-top scale-105 group-hover:scale-110 transition-transform duration-1000"
               />

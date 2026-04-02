@@ -2,118 +2,118 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState, createRef } from "react"
 import { motion } from "framer-motion"
+import { useScrollDirection } from "@/hooks/useScrollDirection"
+import { useActiveSection } from "@/hooks/useActiveSection"
+import ShipNavigator from "./navigation/ShipNavigator"
 
 type NavItem = {
   name: string
   href: string
   type: "hash" | "route"
+  sectionId?: string
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { name: "About", href: "/#about", type: "hash" },
-  { name: "Experience", href: "/#experience", type: "hash" },
-  { name: "Projects", href: "/#projects", type: "hash" },
-  { name: "Skills", href: "/#skills", type: "hash" },
-  { name: "Lab", href: "/#lab", type: "hash" },
-  { name: "Blog", href: "/blog", type: "route" },
-  { name: "Contact", href: "/#contact", type: "hash" },
+  { name: "About",      href: "/#about",      type: "hash", sectionId: "about" },
+  { name: "Experience", href: "/#experience",  type: "hash", sectionId: "experience" },
+  { name: "Projects",   href: "/#projects",    type: "hash", sectionId: "projects" },
+  { name: "Skills",     href: "/#skills",      type: "hash", sectionId: "skills" },
+  { name: "Lab",        href: "/lab",          type: "route" },
+  { name: "Blog",       href: "/blog",         type: "route" },
+  { name: "Contact",    href: "/#contact",     type: "hash", sectionId: "contact" },
 ]
+
+const SECTION_IDS = NAV_ITEMS
+  .filter((i) => i.type === "hash")
+  .map((i) => i.sectionId!)
 
 export default function Navbar() {
   const pathname = usePathname()
-  const [activeSection, setActiveSection] = useState<string>("")
   const [scrolled, setScrolled] = useState(false)
   const [hovered, setHovered] = useState<string | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const navPillRef = useRef<HTMLDivElement>(null)
 
+  // Create stable refs array for nav items
+  const navItemRefs = useRef(NAV_ITEMS.map(() => createRef<HTMLAnchorElement>()))
+
+  // Custom hooks
+  const scrollDirection = useScrollDirection()
+  const { activeSection } = useActiveSection(
+    pathname === "/" ? SECTION_IDS : []
+  )
+
+  // Map activeSection id → NAV_ITEMS index (accounting for blog route)
+  const activeSectionIndex = (() => {
+    if (pathname !== "/") {
+      const blogIdx = NAV_ITEMS.findIndex((i) => i.type === "route")
+      return blogIdx >= 0 ? blogIdx : 0
+    }
+    if (!activeSection) return 0
+    const idx = NAV_ITEMS.findIndex((i) => i.sectionId === activeSection)
+    return idx >= 0 ? idx : 0
+  })()
+
+  // Mount guard for SSR safety
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-
-    handleScroll()
-
-    window.addEventListener("scroll", handleScroll)
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
+    setMounted(true)
   }, [])
 
+  // Scroll detection for frosted glass intensity
   useEffect(() => {
-    if (pathname !== "/") return
+    const handleScroll = () => setScrolled(window.scrollY > 50)
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
-    const ids = NAV_ITEMS
-      .filter((i) => i.type === "hash")
-      .map((i) => i.href.replace("/#", ""))
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
-    const setFromHash = () => {
-      const h = window.location.hash?.replace("#", "")
-      if (h && ids.includes(h)) setActiveSection(h)
-    }
-
-    const getElements = () =>
-      ids
-        .map((id) => document.getElementById(id))
-        .filter((el): el is HTMLElement => Boolean(el))
-
-    const updateActiveFromScroll = () => {
-      const els = getElements()
-      if (els.length === 0) return
-
-      const probe = window.innerHeight * 0.33
-      for (const el of els) {
-        const r = el.getBoundingClientRect()
-        if (r.top <= probe && r.bottom >= probe) {
-          setActiveSection(el.id)
-          return
-        }
-      }
-    }
-
-    let raf = 0
-    const onScroll = () => {
-      if (raf) return
-      raf = window.requestAnimationFrame(() => {
-        raf = 0
-        updateActiveFromScroll()
-      })
-    }
-
-    setFromHash()
-    updateActiveFromScroll()
-
-    window.addEventListener("hashchange", setFromHash)
-    window.addEventListener("scroll", onScroll, { passive: true })
-    window.addEventListener("resize", onScroll)
-
-    return () => {
-      window.removeEventListener("hashchange", setFromHash)
-      window.removeEventListener("scroll", onScroll)
-      window.removeEventListener("resize", onScroll)
-      if (raf) window.cancelAnimationFrame(raf)
-    }
-  }, [pathname])
+  const sceneHeight = isMobile ? 48 : 68
 
   const isActive = (item: NavItem) => {
-    if (item.type === "route") {
-      return pathname === item.href
-    }
+    if (item.type === "route") return pathname === item.href
     if (item.type === "hash" && pathname === "/") {
-      return activeSection === item.href.replace("/#", "")
+      return activeSection === item.sectionId
     }
     return false
   }
 
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
       className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[94vw] max-w-[980px]"
     >
+      {/* ─── SHIP SCENE — sits above the pill ─── */}
       <div
+        className="relative w-full pointer-events-none select-none"
+        style={{ height: sceneHeight, marginBottom: -8 }}
+      >
+        {mounted && (
+          <ShipNavigator
+            navItemRefs={navItemRefs.current as React.RefObject<HTMLElement | null>[]}
+            activeIndex={activeSectionIndex}
+            scrollDirection={scrollDirection}
+            containerHeight={sceneHeight}
+            isMobile={isMobile}
+          />
+        )}
+      </div>
+
+      {/* ─── NAVBAR PILL ─── */}
+      <div
+        ref={navPillRef}
         className={[
           "relative flex items-center justify-center gap-1 md:gap-2 px-3 md:px-4 py-2.5 md:py-3 rounded-full border",
           "overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
@@ -123,17 +123,20 @@ export default function Navbar() {
             : "bg-white/[0.05] backdrop-blur-3xl backdrop-saturate-150 border-white/12 shadow-[0_12px_60px_rgba(0,0,0,0.55)]",
         ].join(" ")}
       >
+        {/* Glass overlays */}
         <div className="absolute inset-0 pointer-events-none opacity-80 bg-[radial-gradient(900px_circle_at_50%_0%,rgba(255,255,255,0.10),transparent_55%)]" />
         <div className="absolute inset-0 pointer-events-none opacity-70 bg-[linear-gradient(180deg,rgba(255,255,255,0.10)_0%,rgba(255,255,255,0.02)_55%,transparent_100%)]" />
         <div className="absolute inset-0 pointer-events-none opacity-40 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.05)_25%,transparent_55%)]" />
 
-        {NAV_ITEMS.map((item) => {
+        {/* Nav links */}
+        {NAV_ITEMS.map((item, idx) => {
           const active = isActive(item)
           const pillOn = hovered === item.name || active
           return (
             <Link
               key={item.name}
               href={item.href}
+              ref={navItemRefs.current[idx] as React.RefObject<HTMLAnchorElement>}
               onMouseEnter={() => setHovered(item.name)}
               onMouseLeave={() => setHovered(null)}
               className={[
@@ -151,7 +154,9 @@ export default function Navbar() {
                     background: active
                       ? "linear-gradient(180deg, rgb(var(--ay-accent-rgb) / 0.22), rgb(var(--ay-glow-rgb) / 0.10))"
                       : "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03))",
-                    boxShadow: active ? "0 0 26px rgb(var(--ay-glow-rgb) / 0.22)" : "0 0 14px rgba(255,255,255,0.08)",
+                    boxShadow: active
+                      ? "0 0 26px rgb(var(--ay-glow-rgb) / 0.22)"
+                      : "0 0 14px rgba(255,255,255,0.08)",
                   }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 />
