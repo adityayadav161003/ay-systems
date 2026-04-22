@@ -6,7 +6,7 @@ type ThemeId = "mocha" | "midnight" | "graphite" | "nebula"
 
 const THEMES: Record<ThemeId, { accentRgb: string; glowRgb: string; panelAlpha: string; borderAlpha: string; starsOpacity: string }> = {
   mocha: { accentRgb: "217 119 87", glowRgb: "217 119 87", panelAlpha: "0.035", borderAlpha: "0.12", starsOpacity: "0.32" },
-  midnight: { accentRgb: "59 130 246", glowRgb: "99 102 241", panelAlpha: "0.03", borderAlpha: "0.10", starsOpacity: "0.40" },
+  midnight: { accentRgb: "79 70 229", glowRgb: "67 56 202", panelAlpha: "0.025", borderAlpha: "0.08", starsOpacity: "0.28" },
   graphite: { accentRgb: "148 163 184", glowRgb: "148 163 184", panelAlpha: "0.028", borderAlpha: "0.12", starsOpacity: "0.24" },
   nebula: { accentRgb: "168 85 247", glowRgb: "59 130 246", panelAlpha: "0.035", borderAlpha: "0.12", starsOpacity: "0.46" },
 }
@@ -117,18 +117,18 @@ export default function GalaxyBackground() {
         style={{ opacity: "var(--ay-stars-opacity)" }}
       />
       
-      {/* Nebula/Glow Effects */}
+      {/* Nebula/Glow Effects - Darker, more subtle */}
       <div
         className="absolute top-[-10%] left-[-10%] w-[55%] h-[55%] blur-[140px] rounded-full"
-        style={{ backgroundColor: "rgb(var(--ay-glow-rgb) / 0.14)" }}
+        style={{ backgroundColor: "rgb(var(--ay-glow-rgb) / 0.08)" }}
       />
       <div
         className="absolute bottom-[-10%] right-[-10%] w-[55%] h-[55%] blur-[140px] rounded-full"
-        style={{ backgroundColor: "rgb(var(--ay-accent-rgb) / 0.10)" }}
+        style={{ backgroundColor: "rgb(var(--ay-accent-rgb) / 0.06)" }}
       />
       <div
         className="absolute top-[30%] left-[40%] w-[45%] h-[45%] blur-[180px] rounded-full"
-        style={{ backgroundColor: "rgb(var(--ay-glow-rgb) / 0.08)" }}
+        style={{ backgroundColor: "rgb(var(--ay-glow-rgb) / 0.05)" }}
       />
       
       {/* Subtle Grid */}

@@ -39,3 +39,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# development summary files
+*_SUMMARY.md
+FINAL_STRUCTURE_SUMMARY.md
+TYPOGRAPHY_UPGRADE_SUMMARY.md
+CHANGES_TO_APPLY.md
+
+# IDE
+.kiro/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

@@ -28,7 +28,7 @@ export default function ShipSVG({ direction, active = false, width = 52 }: ShipS
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       animate={{ scaleX: direction }}
-      transition={{ type: "spring", stiffness: 220, damping: 26 }}
+      transition={{ type: "spring", stiffness: 150, damping: 20, mass: 0.8 }}
       style={{ transformOrigin: "center center", overflow: "visible" }}
     >
       <defs>

@@ -11,23 +11,25 @@ import ShipNavigator from "./navigation/ShipNavigator"
 type NavItem = {
   name: string
   href: string
-  type: "hash" | "route"
+  type: "primary" | "secondary"
   sectionId?: string
 }
 
+// PRIMARY: scroll-based navigation (ship moves across these)
+// SECONDARY: route-based navigation (ship ignores these)
 const NAV_ITEMS: NavItem[] = [
-  { name: "About",      href: "/#about",      type: "hash", sectionId: "about" },
-  { name: "Experience", href: "/#experience",  type: "hash", sectionId: "experience" },
-  { name: "Projects",   href: "/#projects",    type: "hash", sectionId: "projects" },
-  { name: "Skills",     href: "/#skills",      type: "hash", sectionId: "skills" },
-  { name: "Lab",        href: "/lab",          type: "route" },
-  { name: "Blog",       href: "/blog",         type: "route" },
-  { name: "Contact",    href: "/#contact",     type: "hash", sectionId: "contact" },
+  { name: "About",      href: "/#about",         type: "primary", sectionId: "about" },
+  { name: "Experience", href: "/#experience",    type: "primary", sectionId: "experience" },
+  { name: "Projects",   href: "/#projects",      type: "primary", sectionId: "projects" },
+  { name: "Skills",     href: "/#skills",        type: "primary", sectionId: "skills" },
+  { name: "Contact",    href: "/#contact",       type: "primary", sectionId: "contact" },
+  { name: "Lab",        href: "/lab",            type: "secondary" },
+  { name: "Thoughts",   href: "/thoughts",       type: "secondary" },
 ]
 
-const SECTION_IDS = NAV_ITEMS
-  .filter((i) => i.type === "hash")
-  .map((i) => i.sectionId!)
+// Only PRIMARY nav items for scroll tracking
+const PRIMARY_ITEMS = NAV_ITEMS.filter((i) => i.type === "primary")
+const PRIMARY_SECTION_IDS = PRIMARY_ITEMS.map((i) => i.sectionId!)
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -37,23 +39,22 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false)
   const navPillRef = useRef<HTMLDivElement>(null)
 
-  // Create stable refs array for nav items
+  // Create refs for ALL nav items
   const navItemRefs = useRef(NAV_ITEMS.map(() => createRef<HTMLAnchorElement>()))
+  
+  // Create refs for PRIMARY nav items only (for ship animation)
+  const primaryNavRefs = useRef(PRIMARY_ITEMS.map(() => createRef<HTMLAnchorElement>()))
 
-  // Custom hooks
+  // Custom hooks - only track PRIMARY sections
   const scrollDirection = useScrollDirection()
   const { activeSection } = useActiveSection(
-    pathname === "/" ? SECTION_IDS : []
+    pathname === "/" ? PRIMARY_SECTION_IDS : []
   )
 
-  // Map activeSection id → NAV_ITEMS index (accounting for blog route)
-  const activeSectionIndex = (() => {
-    if (pathname !== "/") {
-      const blogIdx = NAV_ITEMS.findIndex((i) => i.type === "route")
-      return blogIdx >= 0 ? blogIdx : 0
-    }
-    if (!activeSection) return 0
-    const idx = NAV_ITEMS.findIndex((i) => i.sectionId === activeSection)
+  // Map activeSection to PRIMARY nav index (for ship animation)
+  const activePrimaryIndex = (() => {
+    if (pathname !== "/" || !activeSection) return 0
+    const idx = PRIMARY_ITEMS.findIndex((i) => i.sectionId === activeSection)
     return idx >= 0 ? idx : 0
   })()
 
@@ -78,11 +79,24 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  const sceneHeight = isMobile ? 48 : 68
+  // Sync primary nav refs with actual nav item refs
+  useEffect(() => {
+    let primaryIdx = 0
+    NAV_ITEMS.forEach((item, idx) => {
+      if (item.type === "primary") {
+        primaryNavRefs.current[primaryIdx] = navItemRefs.current[idx] as React.RefObject<HTMLAnchorElement>
+        primaryIdx++
+      }
+    })
+  }, [])
+
+  const sceneHeight = isMobile ? 0 : 68
 
   const isActive = (item: NavItem) => {
-    if (item.type === "route") return pathname === item.href
-    if (item.type === "hash" && pathname === "/") {
+    if (item.type === "secondary") {
+      return pathname === item.href
+    }
+    if (item.type === "primary" && pathname === "/") {
       return activeSection === item.sectionId
     }
     return false
@@ -93,19 +107,17 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[94vw] max-w-[980px]"
+      className="fixed top-3 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[96vw] md:w-[96vw] lg:w-[94vw] max-w-[1100px]"
     >
       {/* ─── SHIP SCENE — sits above the pill ─── */}
       <div
         className="relative w-full pointer-events-none select-none"
-        style={{ height: sceneHeight, marginBottom: -8 }}
+        style={{ height: sceneHeight, marginBottom: sceneHeight > 0 ? -8 : 0 }}
       >
-        {mounted && (
+        {mounted && pathname === "/" && !isMobile && (
           <ShipNavigator
-            navItemRefs={navItemRefs.current as React.RefObject<HTMLElement | null>[]}
-            activeIndex={activeSectionIndex}
-            scrollDirection={scrollDirection}
-            containerHeight={sceneHeight}
+            activeIndex={activePrimaryIndex}
+            navItemRefs={primaryNavRefs.current as React.RefObject<HTMLElement | null>[]}
             isMobile={isMobile}
           />
         )}
@@ -115,12 +127,12 @@ export default function Navbar() {
       <div
         ref={navPillRef}
         className={[
-          "relative flex items-center justify-center gap-1 md:gap-2 px-3 md:px-4 py-2.5 md:py-3 rounded-full border",
+          "relative flex items-center justify-start md:justify-center gap-1 md:gap-1 lg:gap-2 px-3 md:px-3 lg:px-4 py-2.5 md:py-2.5 lg:py-3 rounded-full border",
           "overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
           "transition-all duration-500",
           scrolled
             ? "bg-white/[0.07] backdrop-blur-3xl backdrop-saturate-150 border-white/12 shadow-[0_20px_80px_rgba(0,0,0,0.65)]"
-            : "bg-white/[0.05] backdrop-blur-3xl backdrop-saturate-150 border-white/12 shadow-[0_12px_60px_rgba(0,0,0,0.55)]",
+            : "bg-white/5 backdrop-blur-3xl backdrop-saturate-150 border-white/12 shadow-[0_12px_60px_rgba(0,0,0,0.55)]",
         ].join(" ")}
       >
         {/* Glass overlays */}
@@ -132,6 +144,8 @@ export default function Navbar() {
         {NAV_ITEMS.map((item, idx) => {
           const active = isActive(item)
           const pillOn = hovered === item.name || active
+          const isSecondary = item.type === "secondary"
+          
           return (
             <Link
               key={item.name}
@@ -140,10 +154,11 @@ export default function Navbar() {
               onMouseEnter={() => setHovered(item.name)}
               onMouseLeave={() => setHovered(null)}
               className={[
-                "relative shrink-0 px-3 md:px-4 py-2 rounded-full",
-                "text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em]",
+                "relative shrink-0 px-3 md:px-3 lg:px-4 py-2 md:py-2 rounded-full whitespace-nowrap",
+                "text-[10px] md:text-[10px] lg:text-[12px] font-bold uppercase tracking-[0.12em] md:tracking-[0.18em] lg:tracking-[0.22em]",
                 "transition-colors duration-300",
                 active ? "text-white" : "text-white/55 hover:text-white",
+                isSecondary && idx === 5 ? "ml-2 md:ml-2" : "", // Add spacing before Lab
               ].join(" ")}
             >
               {pillOn ? (
