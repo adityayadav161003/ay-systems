@@ -152,6 +152,54 @@ ay-systems/
 
 ## 🚀 Getting Started
 
+### 🌐 Three Ways to Experience This Project
+
+```
+Live Site (Vercel)
+    ↓
+    For visitors to see the portfolio in action
+    https://ay-systems-iota.vercel.app
+
+GitHub Repository
+    ↓
+    For developers to explore code and learn
+    Open source for reference and learning
+
+Local Development
+    ↓
+    For running and testing on your machine
+    Full development environment setup
+```
+
+---
+
+### 🔴 Option 1: View Live Site (Recommended)
+
+**Just want to see the portfolio?**
+
+👉 Visit: [https://ay-systems-iota.vercel.app](https://ay-systems-iota.vercel.app)
+
+No installation needed. Fully deployed and production-ready.
+
+---
+
+### 🟡 Option 2: Explore on GitHub
+
+**Want to learn from the code?**
+
+👉 Browse the repository: [github.com/adityayadav161003/ay-systems](https://github.com/adityayadav161003/ay-systems)
+
+- Read the source code
+- Check the project structure
+- See implementation details
+- Fork for your own use
+
+---
+
+### 🟢 Option 3: Run Locally (For Developers)
+
+**Want to modify or contribute?**
+
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
