@@ -10,8 +10,10 @@
   --ay-border-alpha: 0.08;
   --ay-stars-opacity: 0.28;
 }
+
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 120px;
 }
 
 
@@ -86,7 +88,4 @@ body {
 
 .perspective-1000 {
   perspective: 1000px;
-}
-html {
-  scroll-behavior: smooth;
 }

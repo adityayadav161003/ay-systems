@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { motion } from "framer-motion"
 import Hero from '@/components/Hero'
 import About from '@/components/sections/About'
@@ -14,6 +15,11 @@ import Blog from '@/components/sections/Blog'
 import Contact from '@/components/sections/Contact'
 
 export default function Home() {
+  // Scroll to top on page load/reload
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <>
       <main className="relative text-white overflow-hidden">
