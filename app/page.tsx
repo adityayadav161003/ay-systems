@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Hero from '@/components/Hero'
 import About from '@/components/sections/About'
+import HowIBuild from '@/components/sections/HowIBuild'
 import Projects from '@/components/sections/Projects'
 import WhatIBuild from '@/components/sections/WhatIBuild'
 
@@ -18,6 +19,7 @@ export default function Home() {
       <main className="relative text-white overflow-hidden">
         <Hero />
         <About />
+        <HowIBuild />
         <Metrics />
         <WhatIBuild />
         <Timeline />

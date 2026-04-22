@@ -9,9 +9,21 @@ const timeline = [
     date: "Summer 2024",
     icon: <Briefcase className="text-blue-400" size={24} />,
     description: [
-      "Built and evaluated a fraud transaction classification model (~85–90% accuracy) using scikit-learn.",
-      "Owned the workflow end-to-end: preprocessing, feature engineering, training, evaluation, and iterative tuning.",
-      "Compared approaches with clear metrics and refined based on error patterns."
+      "Fraud transaction classification system (Python, scikit-learn) achieving ~85–90% accuracy — full lifecycle ownership from data prep to evaluation.",
+      "Java-based data processing pipeline for transaction ingestion, delivering ~20% throughput improvement.",
+      "Generative AI proof-of-concept for synthetic training data generation, resulting in ~10% model robustness improvement.",
+      "Structured experiment logs with metric tracking and iterative refinement based on error patterns."
+    ]
+  },
+  {
+    title: "Independent Systems Builder",
+    company: "Self-Directed",
+    date: "2024 – Present",
+    icon: <Briefcase className="text-cyan-400" size={24} />,
+    description: [
+      "Building production-quality intelligent systems, data tools, and AI-powered interfaces.",
+      "Real engineering work: pipelines, models, metrics — not coursework exercises.",
+      "Focus on measurable results, clean architecture, and systems that scale."
     ]
   },
   {
@@ -34,17 +46,14 @@ const timeline = [
       "General Secretary, CSED Club",
       "Supported coordination, communication, and event execution across student teams."
     ]
-  },
-  {
-    title: "Certifications",
-    company: "Industry Recognition",
-    date: "2024",
-    icon: <Award className="text-orange-400" size={24} />,
-    description: [
-      "HP LIFE Data Science & Analytics",
-      "Deloitte Australia Technology Job Simulation"
-    ]
   }
+]
+
+const certifications = [
+  { title: "HP LIFE — Data Science & Analytics", date: "2024" },
+  { title: "Deloitte Australia — Technology Job Simulation", date: "2024" },
+  { title: "In Progress: Google ML Crash Course", date: "2024-2025" },
+  { title: "In Progress: AWS Cloud Practitioner", date: "2024-2025" },
 ]
 
 export default function Timeline() {
@@ -107,6 +116,38 @@ export default function Timeline() {
             </motion.div>
           ))}
         </div>
+
+        {/* Certifications Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true }}
+          className="space-y-6 pt-8 border-t border-white/10"
+        >
+          <div className="space-y-2">
+            <h3 className="text-2xl font-black text-white tracking-tight">Certifications & Learning</h3>
+            <p className="text-sm text-gray-500">Relevant credentials and ongoing development:</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {certifications.map((cert, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * i, duration: 0.4 }}
+                viewport={{ once: true }}
+                className="flex items-start gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300"
+              >
+                <div className="mt-1.5 w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+                <div className="space-y-1">
+                  <p className="text-sm font-semibold text-white">{cert.title}</p>
+                  <p className="text-xs text-gray-500">{cert.date}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </SectionWrapper>
   )
