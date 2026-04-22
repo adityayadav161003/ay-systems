@@ -15,10 +15,14 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-12 mb-24">
         <div className="col-span-1 md:col-span-2 space-y-8">
           <h3 className="text-3xl font-black text-white tracking-tighter">ADITYA <span className="text-white/40 italic">YADAV.</span></h3>
-          <p className="max-w-md text-gray-500 text-lg leading-relaxed font-medium">
-            Building intelligent systems with machine learning, automation, and data. 
-            Focused on creating scalable architectures and meaningful software experiences.
-          </p>
+          <div className="space-y-2">
+            <p className="max-w-md text-white text-lg leading-relaxed font-bold">
+              I build things that think.
+            </p>
+            <p className="max-w-md text-gray-500 text-base leading-relaxed font-medium">
+              Engineering intelligent systems — one pipeline at a time.
+            </p>
+          </div>
           <div className="flex gap-5">
             {[
               { icon: Github, href: "https://github.com/adityayadav161003" },
@@ -82,7 +86,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
         <p className="text-[10px] font-black text-gray-600 tracking-[0.3em] uppercase">
-          © {new Date().getFullYear()} Aditya Yadav — Intelligent Systems v1.0
+          © {new Date().getFullYear()} Aditya Yadav — Systems v2.0
         </p>
         
         <button 

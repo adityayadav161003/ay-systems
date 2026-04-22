@@ -1,119 +1,143 @@
-import SectionWrapper from "@/components/SectionWrapper"
-import { motion } from "framer-motion"
-import { Brain, BarChart3, Eye, Globe, Zap } from "lucide-react"
+"use client"
 
-const skillCards = [
+import SectionWrapper from "@/components/SectionWrapper"
+import { motion, Variants } from "framer-motion"
+
+const skillCategories = [
   {
-    title: "Machine Learning",
-    icon: <Brain className="text-blue-400" size={32} />,
-    description: "Preprocessing, feature engineering, training, and evaluation with repeatable experiments.",
-    skills: ["scikit-learn", "Feature Engineering", "Model Evaluation", "AutoML"]
+    icon: "⚙️",
+    title: "Core Intelligence Stack",
+    skills: ["Python", "scikit-learn", "NumPy", "Pandas", "LLMs", "Generative AI", "AutoML", "Feature Engineering", "Model Evaluation"],
   },
   {
-    title: "Data Analysis",
-    icon: <BarChart3 className="text-purple-400" size={32} />,
-    description: "Cleaning datasets, running EDA, and turning findings into clear visuals and narratives.",
-    skills: ["Python", "Pandas", "NumPy", "EDA", "SQL (Basic)", "Excel"]
+    icon: "👁",
+    title: "Perception & Vision",
+    skills: ["OpenCV", "MediaPipe", "Real-Time Pipelines", "Gesture Recognition", "Computer Vision"],
   },
   {
-    title: "Computer Vision",
-    icon: <Eye className="text-emerald-400" size={32} />,
-    description: "Real-time pipelines focused on latency, stability, and practical interaction loops.",
-    skills: ["OpenCV", "MediaPipe", "Image Processing", "Vision Workflows"]
+    icon: "🏗",
+    title: "Systems & Architecture",
+    skills: ["Pipeline Design", "Config-Driven Workflows", "Orchestration", "Experiment Tracking", "Artifact Management", "Modular Architecture"],
   },
   {
-    title: "Web & Tools",
-    icon: <Globe className="text-orange-400" size={32} />,
-    description: "Product-quality UI, strong DX, and the tooling to ship reliably.",
-    skills: ["JavaScript", "HTML", "CSS", "Git", "GitHub", "Next.js"]
-  }
+    icon: "🌐",
+    title: "Web & Deployment",
+    skills: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "REST APIs", "Git", "GitHub", "Vercel"],
+  },
+  {
+    icon: "📊",
+    title: "Data & Analysis",
+    skills: ["SQL", "EDA", "Data Cleaning", "Excel", "Jupyter", "Matplotlib", "Seaborn"],
+  },
 ]
 
+const currentlyWiring = ["RAG", "Vector Databases", "MLflow", "Docker", "FastAPI", "Hugging Face Transformers", "LangChain"]
+
 export default function Skills() {
+  const categoryVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    }),
+  }
+
+  const skillVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: (i: number) => ({
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delay: i * 0.05,
+        duration: 0.4,
+      },
+    }),
+  }
+
   return (
     <SectionWrapper id="skills" plain noPadding>
       <div className="space-y-16">
-        <div className="text-center md:text-left space-y-4">
-          <div className="flex items-center justify-center md:justify-start gap-3 text-purple-400 font-bold tracking-[0.2em] uppercase text-xs">
-            <Zap size={16} />
-            <span>Core Capabilities</span>
-          </div>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white">
-            Technical <span className="text-white/40 italic">Arsenal.</span>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="space-y-4"
+        >
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white">
+            The Stack.
           </h2>
-          <p className="text-gray-400 max-w-2xl text-lg leading-relaxed mx-auto md:ml-0">
-            A focused toolkit for ML workflows, data analysis, computer vision, and product-quality UI.
-          </p>
-        </div>
+          <div className="h-1.5 w-20 bg-cyan-500 rounded-full" />
+        </motion.div>
 
-        <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.02] backdrop-blur-2xl p-6 md:p-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div className="space-y-2">
-              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/55">Core Stack</div>
-              <div className="text-white/80 text-sm md:text-base font-medium leading-relaxed">
-                Python, Pandas, NumPy, scikit-learn, OpenCV, MediaPipe, Git, SQL (Basic), HTML/CSS/JS
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {["Python", "Pandas", "scikit-learn", "OpenCV", "Git", "SQL"].map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-white/70"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {skillCards.map((card, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="group relative p-8 rounded-[2rem] border border-white/10 bg-[#050505]/60 backdrop-blur-xl hover:border-blue-500/30 transition-all duration-700 hover:-translate-y-3 overflow-hidden"
+        {/* Categories */}
+        <div className="space-y-8">
+          {skillCategories.map((category, catIndex) => (
+            <motion.div
+              key={category.title}
+              custom={catIndex}
+              variants={categoryVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              className="space-y-3"
             >
-              {/* Animated Glow Border */}
-              <div className="absolute inset-0 rounded-[2rem] p-px bg-gradient-to-br from-transparent via-transparent to-transparent group-hover:from-blue-500/20 group-hover:via-purple-500/20 group-hover:to-blue-500/20 transition-all duration-700" />
-              
-              {/* Moving Gradient Overlay */}
-              <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/[0.03] to-transparent group-hover:animate-shimmer" />
-              
-              <div className="relative z-10 space-y-6">
-                <div className="p-4 w-fit rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 group-hover:bg-blue-500/10 group-hover:border-blue-500/30 transition-all duration-700">
-                  {card.icon}
-                </div>
-                
-                <div className="space-y-3">
-                  <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-500">
-                    {card.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400 transition-colors duration-500">
-                    {card.description}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {card.skills.map((skill) => (
-                    <span 
-                      key={skill}
-                      className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-gray-400 group-hover:bg-blue-500/5 group-hover:text-blue-300 group-hover:border-blue-500/20 transition-all duration-500"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+              <h3 className="text-base md:text-lg font-bold text-white tracking-tight flex items-center gap-2">
+                <span className="text-xl">{category.icon}</span>
+                {category.title}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill, skillIndex) => (
+                  <motion.span
+                    key={skill}
+                    custom={skillIndex}
+                    variants={skillVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs md:text-sm font-medium text-gray-400 hover:bg-white/10 hover:border-white/20 hover:text-white transition-all duration-300"
+                  >
+                    {skill}
+                  </motion.span>
+                ))}
               </div>
-              
-              {/* Decorative Corner Light */}
-              <div className="absolute -top-10 -right-10 w-20 h-20 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-700" />
             </motion.div>
           ))}
         </div>
+
+        {/* Currently Wiring In */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="space-y-3 pt-8 border-t border-white/10"
+        >
+          <h3 className="text-base md:text-lg font-bold text-white/70 tracking-tight flex items-center gap-2">
+            <span>Currently Wiring In →</span>
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {currentlyWiring.map((skill, index) => (
+              <motion.span
+                key={skill}
+                custom={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.55 + index * 0.05, duration: 0.4 }}
+                className="px-3 py-1.5 rounded-full bg-white/[0.02] border border-white/10 text-xs md:text-sm font-medium text-gray-500 hover:bg-white/5 hover:text-gray-400 transition-all duration-300"
+              >
+                {skill}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </SectionWrapper>
   )

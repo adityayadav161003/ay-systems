@@ -16,8 +16,13 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata = {
-  title: "Aditya Yadav — Engineering Systems",
-  description: "Building structured, scalable and meaningful digital systems.",
+  title: "Aditya Yadav — I Build Things That Think",
+  description: "AI engineer, systems architect, and AutoML builder. Engineering intelligent systems at the intersection of code and intelligence. Based in Mathura, India. Open to AI/ML internships 2026.",
+  keywords: "AI engineer, machine learning, systems architect, AutoML, data analyst, Python, deep learning, GLA University",
+  openGraph: {
+    title: "Aditya Yadav — I Build Things That Think",
+    description: "Engineering intelligent systems — pipelines, models, metrics, and real outputs.",
+  },
 };
 
 

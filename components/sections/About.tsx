@@ -1,82 +1,108 @@
+"use client"
+
 import SectionWrapper from "@/components/SectionWrapper"
-import { motion } from "framer-motion"
-import { User } from "lucide-react"
+import { motion, useReducedMotion } from "framer-motion"
+import { Variants } from "framer-motion"
 
 export default function About() {
+  const prefersReducedMotion = useReducedMotion()
+
+  const rightNowVariants: Variants = {
+    hidden: { opacity: 0, x: 30 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    },
+  }
+
+  const statusItems = [
+    { icon: "🟢", label: "Building", value: "AY Systems AutoML Pipeline" },
+    { icon: "🟡", label: "Exploring", value: "LLM reasoning, RAG pipelines, MLOps" },
+    { icon: "🔵", label: "Reading", value: '"Designing ML Systems" — Chip Huyen' },
+    { icon: "🟣", label: "Open to", value: "AI/ML Engineering internships (2026)" },
+    { icon: "⚪", label: "Based in", value: "Mathura, India" },
+  ]
+
   return (
     <SectionWrapper id="about" plain noPadding>
-      <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
-        <div className="space-y-10">
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 text-blue-400 font-bold tracking-[0.2em] uppercase text-xs">
-              <User size={16} />
-              <span>Personal Narrative</span>
-            </div>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white leading-tight">
-              Building With <span className="text-white/40 italic">Intention.</span>
-            </h2>
-            <div className="h-1.5 w-24 bg-blue-500 rounded-full" />
-          </div>
-
-          <div className="space-y-8 text-gray-400 text-lg md:text-xl leading-relaxed font-medium">
-            <p>
-              I’m a B.Tech Computer Science student at GLA University who enjoys turning messy data into reliable ML workflows —
-              with clean preprocessing, measurable evaluation, and deployment-ready outputs.
-            </p>
-            <p>
-              I’ve worked across automated ML tooling and real-time computer vision.
-              I care about disciplined iteration, readable code, and building things that other people can actually run.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-12 pt-8 border-t border-white/10">
-            <div className="space-y-2">
-              <h4 className="text-white font-black text-2xl tracking-tighter">GLA University</h4>
-              <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] font-black">Education Hub</p>
-            </div>
-            <div className="space-y-2">
-              <h4 className="text-white font-black text-2xl tracking-tighter">Intrainz</h4>
-              <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] font-black">Internship Exposure</p>
-            </div>
-          </div>
-        </div>
-
+      <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
+        {/* LEFT COLUMN — BIO */}
         <motion.div 
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          viewport={{ once: true }}
-          className="relative p-px rounded-[3rem] bg-gradient-to-tr from-white/10 to-transparent group overflow-hidden"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="space-y-6"
         >
-          {/* Animated background shimmer */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent group-hover:animate-shimmer" />
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-tight">
+            Who I Am.
+          </h2>
+          <div className="h-1.5 w-20 bg-cyan-500 rounded-full" />
           
-          <div className="bg-[#050505]/60 backdrop-blur-3xl p-10 md:p-16 rounded-[3rem] border border-white/10 space-y-12 relative z-10">
-            <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight italic leading-snug">
-              &ldquo;Build end-to-end. Measure outcomes. Ship with clarity. Improve relentlessly.&rdquo;
-            </h3>
-            
-            <div className="grid grid-cols-2 gap-10">
-              {[
-                { value: "June 2027", label: "Expected Graduation" },
-                { value: "CSE", label: "B.Tech (GLA)" },
-                { value: "ML Intern", label: "Intrainz Innovation" },
-                { value: "Mathura, IN", label: "Based In" },
-              ].map((stat, i) => (
-                <div key={i} className="space-y-2 group/stat">
-                  <span className="text-4xl font-black text-white tracking-tighter group-hover/stat:text-blue-400 transition-colors duration-300">
-                    {stat.value}
-                  </span>
-                  <p className="text-gray-600 text-[10px] uppercase tracking-[0.2em] font-black group-hover/stat:text-gray-400 transition-colors duration-300">
-                    {stat.label}
+          <div className="space-y-6 text-gray-400 text-base md:text-lg leading-relaxed font-medium">
+            <p>
+              B.Tech Computer Science student at GLA University. Engineer systems at the intersection of code and intelligence.
+            </p>
+            <p>
+              I build production-quality ML pipelines — data processing, feature engineering, model training, evaluation, export. Measurable results. Clean implementation. Shipping.
+            </p>
+            <p>
+              Worked across AutoML tooling, fraud detection systems, and real-time computer vision. I care about architectures that scale, metrics that matter, and code that other people can run.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* RIGHT COLUMN — RIGHT NOW STATUS CARD */}
+        <motion.div
+          variants={rightNowVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="relative group"
+        >
+          {/* Animated gradient border */}
+          <motion.div
+            animate={
+              prefersReducedMotion
+                ? {}
+                : {
+                    backgroundPosition: ["0% center", "100% center", "0% center"],
+                  }
+            }
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-500 opacity-30 blur"
+            style={{ backgroundSize: "200% 200%" }}
+          />
+
+          <div className="relative bg-black/40 backdrop-blur-xl p-8 md:p-10 rounded-2xl border border-white/10 space-y-6">
+            <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">Right Now</h3>
+
+            <div className="space-y-4 divide-y divide-white/10">
+              {statusItems.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="py-4 first:pt-0 last:pb-0 space-y-1"
+                >
+                  <div className="flex items-center gap-2 text-sm md:text-base font-semibold text-white/80">
+                    <span className="text-lg">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </div>
+                  <p className="text-sm md:text-base text-gray-400 pl-6">
+                    {item.value}
                   </p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
-          
-          {/* Corner accent */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full" />
         </motion.div>
       </div>
     </SectionWrapper>

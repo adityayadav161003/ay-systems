@@ -125,30 +125,78 @@ const projects = [
   },
   {
     id: 4,
-    title: "Full-Stack Portfolio Website",
+    title: "Netflix Content Intelligence",
     description:
-      "This site: a product-quality portfolio focused on clarity, performance, and interaction polish — built to be recruiter-friendly.",
-    impact: "Product UI · Real deployment",
-    tech: ["Next.js 16", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      "End-to-end exploratory analysis of Netflix's global content library — distribution patterns, top content-producing countries, genre trends, and content growth over time.",
+    impact: "Data Analysis · EDA",
+    tech: ["Python", "Pandas", "Seaborn", "Matplotlib", "Jupyter"],
     highlights: [
-      { label: "Built", text: "A premium UI with responsive layout, micro-interactions, and a canvas starfield background." },
-      { label: "Why", text: "Designed for fast scanning: role, proof, projects, and contact within seconds." },
-      { label: "Ownership", text: "Designed and implemented end-to-end." },
+      { label: "Built", text: "Real insight extraction from Netflix's public dataset using systematic EDA techniques." },
+      { label: "Outcome", text: "Discovered content distribution patterns and growth trends with visual storytelling." },
+      { label: "Focus", text: "Data-driven analysis over toy demos — extracting meaning from messy real-world data." },
     ],
     links: [
-      { kind: "github", href: "https://github.com/adityayadav161003/ay-systems", label: "Repo" },
-      { kind: "demo", href: "https://ay-systems-iota.vercel.app", label: "Live" },
+      { kind: "github", href: "https://github.com/adityayadav161003/Netflix-Data-Analysis", label: "Repo" },
     ],
     deepDive: {
       problem:
-        "Most portfolios look good but don’t build trust. I wanted a site that reads like a product: clear hierarchy, proof, and fast conversion.",
+        "Public datasets are everywhere but analysis work is rare. I wanted to practice systematic EDA on a real, interesting dataset: Netflix's global content library.",
       approach:
-        "Build a consistent section system, a premium dark aesthetic, and intentional micro-interactions while keeping performance and readability strong.",
-      flow: ["Hero + trust signals", "Projects as proof", "Skills for scanning", "Lab for interaction craft", "Contact for conversion"],
-      results: ["Clearer recruiter scan path and stronger proof-first project structure.", "Polished interaction feel without adding gimmicks."],
-      tradeoffs: ["Kept effects lightweight (no heavy 3D libs).", "Focused on readability on mobile and recruiter screens."],
-      challenges: ["Balancing visual richness with layout stability across breakpoints.", "Avoiding ‘template portfolio’ signals."],
-      next: ["Add 1–2 deeper case studies with diagrams.", "Add per-project demo clips where available."],
+        "Load the dataset, understand distributions, identify trends, and visualize patterns that matter: which countries produce most content, genre popularity shifts, impact of releases over time.",
+      flow: [
+        "Data load + exploration (shape, columns, nulls)",
+        "Distribution analysis (content types, genres, countries)",
+        "Time-series trends (when content added over time)",
+        "Geographic insights (top-producing countries)",
+        "Growth patterns and shifts",
+      ],
+      results: [
+        "Clear visualization of content distribution across countries and genres.",
+        "Identified growth trends in Netflix's library over years.",
+        "Demonstrated impact of regional content strategies.",
+      ],
+      tradeoffs: ["Focused on visualization clarity over advanced statistical modeling.", "Public dataset so no proprietary insights."],
+      challenges: ["Handling missing or inconsistent data in real public datasets.", "Finding narratives in raw data."],
+      next: ["Add predictive model for future content trends.", "Extend analysis to IMDb ratings correlation."],
+    },
+    featured: false,
+  },
+  {
+    id: 5,
+    title: "IPL Cricket Performance Analytics",
+    description:
+      "Deep analysis of IPL datasets — player performance metrics, run scorers, wicket takers, team statistics, and toss impact. Real-world sports data wrangling and insight storytelling.",
+    impact: "Sports Analytics · Data Engineering",
+    tech: ["Python", "Pandas", "NumPy", "Matplotlib"],
+    highlights: [
+      { label: "Built", text: "Complete pipeline: raw data → cleaning → analysis → insights on player and team performance." },
+      { label: "Outcome", text: "Discovered hidden patterns in cricket strategy: toss impact, batting order effectiveness, bowler consistency." },
+      { label: "Focus", text: "Real data engineering: messy cricket stats → structured analysis → actionable insights." },
+    ],
+    links: [
+      { kind: "github", href: "https://github.com/adityayadav161003/IPL-Data-Analytics", label: "Repo" },
+    ],
+    deepDive: {
+      problem:
+        "Sports data analysis requires both engineering (data cleaning) and storytelling (finding patterns). I wanted to practice both on real IPL datasets.",
+      approach:
+        "Ingest raw cricket data, standardize formats, calculate performance metrics (strike rate, bowling economy, team stats), and visualize patterns to find strategic insights.",
+      flow: [
+        "Raw IPL data ingestion",
+        "Data cleaning + standardization",
+        "Player-level metrics (runs, wickets, consistency)",
+        "Team statistics aggregation",
+        "Pattern discovery (toss, batting order, performance trends)",
+        "Visualization + narrative",
+      ],
+      results: [
+        "Identified top run-scorers and wicket-takers across seasons.",
+        "Quantified toss impact on match outcomes.",
+        "Discovered patterns in team performance and strategy.",
+      ],
+      tradeoffs: ["Focused on clarity for sports analysts over advanced ML.", "Public datasets with known biases."],
+      challenges: ["Handling inconsistent data formats across seasons.", "Normalizing metrics across different eras of the league."],
+      next: ["Add predictive model for match outcomes.", "Build interactive dashboard for trend exploration."],
     },
     featured: false,
   }
@@ -194,7 +242,7 @@ export default function Projects() {
               Featured <span className="text-white/40 italic">Projects.</span>
             </h2>
             <p className="text-gray-400 max-w-xl text-lg leading-relaxed">
-              Four builds that show how I work: practical ML workflows, real-time CV, tooling, and product-quality UI.
+              Five builds that show how I work: production ML pipelines, real-time CV, tooling, data analysis, and sports analytics.
             </p>
           </div>
         </div>
