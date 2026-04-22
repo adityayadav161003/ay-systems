@@ -4,6 +4,7 @@ import "./globals.css"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import GalaxyBackground from "@/components/GalaxyBackground"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -41,6 +42,7 @@ export default function RootLayout({
         </main>
 
         <Footer />
+        <Analytics />
       </body>
     </html>
   )
