@@ -1,197 +1,232 @@
 "use client"
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  type RefObject,
-} from "react"
+import { useEffect, useRef, useState } from "react"
 import { motion, useSpring } from "framer-motion"
 import ShipSVG from "./ShipSVG"
-import type { ScrollDirection } from "@/hooks/useScrollDirection"
 
 interface ShipNavigatorProps {
-  navItemRefs: RefObject<HTMLElement | null>[]
   activeIndex: number
-  scrollDirection: ScrollDirection
-  containerHeight: number
+  navItemRefs: React.RefObject<HTMLElement | null>[]
   isMobile: boolean
 }
 
 const SHIP_WIDTH = 52
 
 export default function ShipNavigator({
-  navItemRefs,
   activeIndex,
-  scrollDirection,
-  containerHeight,
+  navItemRefs,
   isMobile,
 }: ShipNavigatorProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [waypoints, setWaypoints] = useState<number[]>([])
-  const prevActiveIndex = useRef(activeIndex)
+  const [positions, setPositions] = useState<number[]>([])
+  const [isReady, setIsReady] = useState(false)
   const [shipDirection, setShipDirection] = useState<1 | -1>(1)
+  const prevIndexRef = useRef(activeIndex)
+  const directionTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  // ─── Measure waypoint positions from nav item refs ─────────────
-  const measureWaypoints = useCallback(() => {
+  // Ship position with spring physics - smoother, less bouncy
+  const shipX = useSpring(0, {
+    stiffness: 120,
+    damping: 25,
+    mass: 1,
+    restDelta: 0.001,
+    restSpeed: 0.001,
+  })
+
+  // Directional tilt - subtle and smooth
+  const shipRotate = useSpring(0, {
+    stiffness: 180,
+    damping: 22,
+    mass: 0.8,
+    restDelta: 0.001,
+    restSpeed: 0.001,
+  })
+
+  // Measure nav item positions
+  const measurePositions = () => {
     const container = containerRef.current
     if (!container) return
 
     const containerRect = container.getBoundingClientRect()
-    const pts: number[] = []
-    let validCount = 0
+    const measured: number[] = []
 
-    for (let i = 0; i < navItemRefs.length; i++) {
-      const el = navItemRefs[i]?.current
+    for (const ref of navItemRefs) {
+      const el = ref.current
       if (el) {
         const rect = el.getBoundingClientRect()
+        // Calculate center position relative to container
         const centerX = rect.left - containerRect.left + rect.width / 2
-        pts.push(centerX)
-        validCount++
+        measured.push(centerX)
       } else {
-        pts.push(0)
+        measured.push(0)
       }
     }
 
-    // Only set waypoints when ALL refs have resolved
-    if (validCount === navItemRefs.length && validCount > 0) {
-      setWaypoints(pts)
+    // Only update if we have valid measurements
+    if (measured.length === navItemRefs.length && measured.every(p => p > 0)) {
+      setPositions(measured)
+      setIsReady(true)
+    }
+  }
+
+  // Initial measurement and resize handling
+  useEffect(() => {
+    // Measure after mount with multiple attempts
+    const timer1 = setTimeout(measurePositions, 100)
+    const timer2 = setTimeout(measurePositions, 300)
+    const timer3 = setTimeout(measurePositions, 600)
+
+    // Remeasure on resize
+    const handleResize = () => {
+      setIsReady(false)
+      setTimeout(measurePositions, 100)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      clearTimeout(timer3)
+      window.removeEventListener("resize", handleResize)
     }
   }, [navItemRefs])
 
-  // Poll until refs are ready, then use ResizeObserver
+  // Remeasure when refs change
   useEffect(() => {
-    let cancelled = false
-    let pollTimer: ReturnType<typeof setTimeout>
+    if (navItemRefs.length > 0) {
+      measurePositions()
+    }
+  }, [navItemRefs])
 
-    const poll = () => {
-      if (cancelled) return
-      measureWaypoints()
-      // Keep polling — waypoints state will only set when all refs resolve
-      pollTimer = setTimeout(poll, 150)
+  // Update ship position when active index changes
+  useEffect(() => {
+    if (!isReady || positions.length === 0) return
+
+    const targetPosition = positions[activeIndex]
+    if (targetPosition === undefined) return
+
+    // Calculate ship x position (center ship on nav item)
+    const shipTargetX = targetPosition - SHIP_WIDTH / 2
+
+    // Clamp to container bounds
+    const containerWidth = containerRef.current?.offsetWidth || 0
+    const clampedX = Math.max(0, Math.min(shipTargetX, containerWidth - SHIP_WIDTH))
+
+    // Set ship position
+    shipX.set(clampedX)
+
+    // Set directional tilt and flip
+    const direction = activeIndex > prevIndexRef.current ? 1 : activeIndex < prevIndexRef.current ? -1 : 0
+    if (direction !== 0) {
+      // Clear any pending direction change
+      if (directionTimeoutRef.current) {
+        clearTimeout(directionTimeoutRef.current)
+      }
+      
+      // Update ship direction (flip) - smooth transition
+      setShipDirection(direction as 1 | -1)
+      
+      // Add subtle tilt (reduced from 2 to 1.5)
+      shipRotate.set(direction * 1.5)
+      
+      // Reset tilt after movement with debounce
+      directionTimeoutRef.current = setTimeout(() => {
+        shipRotate.set(0)
+      }, 600)
     }
 
-    // Start after a frame
-    requestAnimationFrame(() => {
-      if (!cancelled) poll()
-    })
-
+    prevIndexRef.current = activeIndex
+  }, [activeIndex, positions, isReady, shipX, shipRotate])
+  
+  // Cleanup timeout on unmount
+  useEffect(() => {
     return () => {
-      cancelled = true
-      clearTimeout(pollTimer)
+      if (directionTimeoutRef.current) {
+        clearTimeout(directionTimeoutRef.current)
+      }
     }
-  }, [measureWaypoints])
+  }, [])
 
-  // Stop polling once waypoints are set, switch to ResizeObserver
-  useEffect(() => {
-    if (waypoints.length === 0) return
-    // Re-measure on resize
-    const handleResize = () => measureWaypoints()
-    window.addEventListener("resize", handleResize)
+  // Don't render on mobile
+  if (isMobile) return null
 
-    const observer = new ResizeObserver(handleResize)
-    if (containerRef.current) observer.observe(containerRef.current)
+  // Show ship even if not fully ready (will position once ready)
+  if (navItemRefs.length === 0) return null
 
-    return () => {
-      window.removeEventListener("resize", handleResize)
-      observer.disconnect()
-    }
-  }, [waypoints.length > 0, measureWaypoints])
-
-  // ─── Spring-driven ship X ──────────────────────────────────────
-  const shipX = useSpring(0, {
-    stiffness: isMobile ? 120 : 80,
-    damping: isMobile ? 20 : 18,
-    mass: isMobile ? 0.8 : 1.2,
-  })
-
-  // Move ship when active section or waypoints change
-  useEffect(() => {
-    if (waypoints.length === 0) return
-    const wp = waypoints[activeIndex]
-    if (wp === undefined) return
-    const targetX = wp - SHIP_WIDTH / 2
-    shipX.set(targetX)
-  }, [activeIndex, waypoints, shipX])
-
-  // ─── Direction logic ───────────────────────────────────────────
-  useEffect(() => {
-    if (activeIndex > prevActiveIndex.current) {
-      setShipDirection(1)
-    } else if (activeIndex < prevActiveIndex.current) {
-      setShipDirection(-1)
-    }
-    prevActiveIndex.current = activeIndex
-  }, [activeIndex])
-
-  useEffect(() => {
-    if (scrollDirection === "up") setShipDirection(-1)
-    else if (scrollDirection === "down") setShipDirection(1)
-  }, [scrollDirection])
-
-  const isMoving = scrollDirection !== "idle"
-  const shipY = containerHeight / 2 - 14
-
-  // ALWAYS render the container div so containerRef is available for measurement.
-  // Only hide the ship contents when waypoints aren't ready.
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 pointer-events-none"
-      style={{ height: containerHeight, overflow: "visible" }}
+      className="absolute inset-0 pointer-events-none overflow-hidden"
+      style={{ height: 68 }}
     >
-      {waypoints.length > 0 && (
-        <>
-          {/* Travel path line */}
-          <div
-            className="absolute left-4 right-4 h-px rounded-full"
-            style={{
-              bottom: containerHeight / 2 - 6,
-              background:
-                "linear-gradient(90deg, transparent, rgba(99,102,241,0.12) 15%, rgba(99,102,241,0.22) 50%, rgba(99,102,241,0.12) 85%, transparent)",
-            }}
-          />
+      {/* Navigation track */}
+      <div
+        className="absolute left-4 right-4 h-px rounded-full"
+        style={{
+          bottom: 28,
+          background:
+            "linear-gradient(90deg, transparent, rgba(99,102,241,0.12) 15%, rgba(99,102,241,0.22) 50%, rgba(99,102,241,0.12) 85%, transparent)",
+        }}
+      />
 
-          {/* Waypoint dots */}
-          {waypoints.map((x, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full transition-all duration-500"
-              style={{
-                left: x - 2.5,
-                top: shipY + 22,
-                width: 5,
-                height: 5,
-                background:
-                  i === activeIndex
-                    ? "rgba(99,102,241,0.95)"
-                    : "rgba(99,102,241,0.2)",
-                boxShadow:
-                  i === activeIndex
-                    ? "0 0 10px rgba(99,102,241,0.65)"
-                    : "none",
-              }}
-            />
-          ))}
+      {/* Waypoint indicators */}
+      {isReady && positions.map((x, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left: x - 2.5,
+            top: 48,
+            width: 5,
+            height: 5,
+          }}
+          animate={{
+            backgroundColor: i === activeIndex ? "rgba(99,102,241,0.95)" : "rgba(99,102,241,0.2)",
+            boxShadow: i === activeIndex ? "0 0 10px rgba(99,102,241,0.65)" : "none",
+          }}
+          transition={{ duration: 0.3 }}
+        />
+      ))}
 
-          {/* THE SHIP */}
+      {/* Ship */}
+      {isReady && positions.length > 0 && (
+        <motion.div
+          className="absolute"
+          style={{
+            x: shipX,
+            y: 20,
+            rotate: shipRotate,
+            width: SHIP_WIDTH,
+          }}
+          animate={{
+            y: [20, 18, 20],
+          }}
+          transition={{
+            y: {
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+          }}
+        >
           <motion.div
-            className="absolute"
-            style={{
-              x: shipX,
-              y: shipY,
-              width: SHIP_WIDTH,
-              filter: `drop-shadow(0 0 ${isMoving ? 14 : 7}px rgba(99,102,241,0.5))`,
+            animate={{
+              filter: [
+                "drop-shadow(0 0 7px rgba(99,102,241,0.5))",
+                "drop-shadow(0 0 12px rgba(99,102,241,0.6))",
+                "drop-shadow(0 0 7px rgba(99,102,241,0.5))",
+              ],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
             }}
           >
-            <ShipSVG
-              direction={shipDirection}
-              active={isMoving}
-              width={SHIP_WIDTH}
-            />
+            <ShipSVG direction={shipDirection} active={false} width={SHIP_WIDTH} />
           </motion.div>
-        </>
+        </motion.div>
       )}
     </div>
   )

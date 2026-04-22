@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1776881227438",
+    "content": "Good one",
+    "name": null,
+    "createdAt": "2026-04-22T18:07:07.438Z",
+    "approved": true
+  },
+  {
+    "id": "1776876590469",
+    "content": "Good work",
+    "postSlug": "first-post",
+    "createdAt": "2026-04-22T16:49:50.469Z",
+    "approved": true
+  }
+]
