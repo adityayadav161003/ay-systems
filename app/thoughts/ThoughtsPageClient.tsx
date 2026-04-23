@@ -33,7 +33,11 @@ export default function ThoughtsPageClient() {
         },
         (payload) => {
           const newThought = payload.new as Thought
-          setThoughts((current) => [newThought, ...current])
+          // Deduplicate: skip if already added via optimistic update
+          setThoughts((current) => {
+            if (current.some((t) => t.id === newThought.id)) return current
+            return [newThought, ...current]
+          })
         }
       )
       .subscribe()
@@ -70,6 +74,12 @@ export default function ThoughtsPageClient() {
       })
 
       if (res.ok) {
+        const newThought = await res.json()
+        // Immediately add to UI (optimistic update)
+        setThoughts((current) => {
+          if (current.some((t) => t.id === newThought.id)) return current
+          return [newThought, ...current]
+        })
         setContent("")
         setName("")
         setJustSubmitted(true)
