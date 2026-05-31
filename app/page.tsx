@@ -35,16 +35,16 @@ export default function Home() {
         <Blog />
         <Contact />
         
-        {/* LARGE BOTTOM BRANDING TEXT */}
-        <section className="relative py-24 md:py-40 flex justify-center items-center overflow-hidden pointer-events-none select-none">
+        {/* LARGE BOTTOM BRANDING TEXT — PREMIUM */}
+        <section className="relative py-32 md:py-48 lg:py-56 flex justify-center items-center overflow-hidden pointer-events-none select-none">
           <motion.div 
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            viewport={{ once: true }}
-            className="relative z-10"
+            initial={{ opacity: 0, y: 80, filter: "blur(12px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: "-200px" }}
+            className="relative z-10 text-center"
           >
-            <h2 className="text-[18vw] font-black tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-transparent">
+            <h2 className="text-[clamp(80px,20vw,240px)] font-black tracking-[-0.02em] leading-none text-transparent bg-clip-text bg-gradient-to-b from-white/8 via-white/5 to-transparent">
               ADITYA YADAV
             </h2>
           </motion.div>

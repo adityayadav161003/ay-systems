@@ -30,9 +30,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-black">
       <body
-        className={`${inter.variable} font-sans bg-black text-white antialiased`}
+        className={`${inter.variable} font-sans text-white antialiased`}
       >
         <Navbar />
         <GalaxyBackground />

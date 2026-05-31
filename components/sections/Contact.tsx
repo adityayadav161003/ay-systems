@@ -11,29 +11,29 @@ export default function Contact() {
       label: "Email",
       value: "adity6946@gmail.com",
       href: "mailto:adity6946@gmail.com",
-      wrapClass: "p-4 md:p-5 rounded-[1.25rem] md:rounded-[1.5rem] bg-white/5 border border-white/10 group-hover/item:bg-blue-500/10 group-hover/item:border-blue-500/20 transition-all duration-500",
-      iconClass: "text-gray-400 group-hover/item:text-blue-400 transition-colors",
-      valueClass: "text-white text-base md:text-lg font-bold group-hover/item:text-blue-400 transition-colors",
+      wrapClass: "p-4 md:p-5 rounded-[1.25rem] md:rounded-[1.5rem] bg-white/5 border border-white/10 group-hover/item:bg-blue-500/15 group-hover/item:border-blue-500/30 transition-all duration-400",
+      iconClass: "text-gray-400 group-hover/item:text-blue-400 transition-colors duration-300",
+      valueClass: "text-white text-base md:text-lg font-bold group-hover/item:text-blue-400 transition-colors duration-300",
     },
     {
       icon: Phone,
       label: "Phone",
       value: "+91 8318570426",
       href: "tel:+918318570426",
-      wrapClass: "p-4 md:p-5 rounded-[1.25rem] md:rounded-[1.5rem] bg-white/5 border border-white/10 group-hover/item:bg-emerald-500/10 group-hover/item:border-emerald-500/20 transition-all duration-500",
-      iconClass: "text-gray-400 group-hover/item:text-emerald-400 transition-colors",
-      valueClass: "text-white text-base md:text-lg font-bold group-hover/item:text-emerald-300 transition-colors",
+      wrapClass: "p-4 md:p-5 rounded-[1.25rem] md:rounded-[1.5rem] bg-white/5 border border-white/10 group-hover/item:bg-emerald-500/15 group-hover/item:border-emerald-500/30 transition-all duration-400",
+      iconClass: "text-gray-400 group-hover/item:text-emerald-400 transition-colors duration-300",
+      valueClass: "text-white text-base md:text-lg font-bold group-hover/item:text-emerald-300 transition-colors duration-300",
     },
   ] as const
 
   return (
     <SectionWrapper id="contact" plain noPadding>
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        viewport={{ once: true }}
-        className="max-w-[1240px] w-full mx-auto bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[2.5rem] md:rounded-[3rem] shadow-2xl relative overflow-hidden group flex flex-col lg:flex-row"
+        initial={{ opacity: 0, scale: 0.93, filter: "blur(8px)" }}
+        whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true, margin: "-100px" }}
+        className="max-w-[1240px] w-full mx-auto bg-white/[0.03] backdrop-blur-3xl border border-white/12 rounded-2xl md:rounded-3xl shadow-2xl relative overflow-hidden group flex flex-col lg:flex-row hover:border-white/16 transition-colors duration-500"
       >
         
         {/* Background Glow */}
@@ -105,15 +105,22 @@ export default function Contact() {
               </p>
             </div>
             
-            <a 
+            <motion.a 
               href="mailto:adity6946@gmail.com"
-              className="flex items-center justify-center gap-3 w-full py-5 lg:py-6 rounded-2xl bg-white text-black font-black uppercase tracking-widest text-sm hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.3)] group/btn relative overflow-hidden"
+              whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(59, 130, 246, 0.4)" }}
+              whileTap={{ scale: 0.98 }}
+              className="flex items-center justify-center gap-3 w-full py-5 lg:py-6 rounded-2xl bg-white text-black font-black uppercase tracking-widest text-sm hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-400 group/btn relative overflow-hidden shadow-lg"
             >
               <span className="relative z-10 flex items-center justify-center gap-3">
-                <Send size={20} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                <motion.span
+                  animate={{ y: [0, -2, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Send size={20} />
+                </motion.span>
                 Email Me
               </span>
-            </a>
+            </motion.a>
             
             <div className="flex items-center gap-3 bg-white/5 w-fit px-4 py-2.5 rounded-full border border-white/5">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />

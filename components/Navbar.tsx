@@ -123,22 +123,22 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* ─── NAVBAR PILL ─── */}
+      {/* ─── NAVBAR PILL — PREMIUM ─── */}
       <div
         ref={navPillRef}
         className={[
-          "relative flex items-center justify-start md:justify-center gap-1 md:gap-1 lg:gap-2 px-3 md:px-3 lg:px-4 py-2.5 md:py-2.5 lg:py-3 rounded-full border",
+          "relative flex items-center justify-start sm:justify-center gap-0.5 sm:gap-1 lg:gap-1.5 px-2.5 sm:px-4 lg:px-5 py-2.5 sm:py-3 rounded-full border",
           "overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
-          "transition-all duration-500",
+          "transition-all duration-500 group",
           scrolled
-            ? "bg-white/[0.07] backdrop-blur-3xl backdrop-saturate-150 border-white/12 shadow-[0_20px_80px_rgba(0,0,0,0.65)]"
-            : "bg-white/5 backdrop-blur-3xl backdrop-saturate-150 border-white/12 shadow-[0_12px_60px_rgba(0,0,0,0.55)]",
+            ? "bg-white/[0.08] backdrop-blur-3xl backdrop-saturate-150 border-white/15 shadow-[0_24px_96px_rgba(0,0,0,0.7)]"
+            : "bg-white/6 backdrop-blur-3xl backdrop-saturate-150 border-white/12 shadow-[0_16px_70px_rgba(0,0,0,0.6)]",
         ].join(" ")}
       >
-        {/* Glass overlays */}
-        <div className="absolute inset-0 pointer-events-none opacity-80 bg-[radial-gradient(900px_circle_at_50%_0%,rgba(255,255,255,0.10),transparent_55%)]" />
-        <div className="absolute inset-0 pointer-events-none opacity-70 bg-[linear-gradient(180deg,rgba(255,255,255,0.10)_0%,rgba(255,255,255,0.02)_55%,transparent_100%)]" />
-        <div className="absolute inset-0 pointer-events-none opacity-40 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.05)_25%,transparent_55%)]" />
+        {/* Premium glass overlays */}
+        <div className="absolute inset-0 pointer-events-none opacity-75 bg-[radial-gradient(1000px_circle_at_50%_0%,rgba(255,255,255,0.12),transparent_60%)] rounded-full" />
+        <div className="absolute inset-0 pointer-events-none opacity-65 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.01)_60%,transparent_100%)] rounded-full" />
+        <div className="absolute inset-0 pointer-events-none opacity-35 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.06)_25%,transparent_60%)] rounded-full" />
 
         {/* Nav links */}
         {NAV_ITEMS.map((item, idx) => {
@@ -154,26 +154,26 @@ export default function Navbar() {
               onMouseEnter={() => setHovered(item.name)}
               onMouseLeave={() => setHovered(null)}
               className={[
-                "relative shrink-0 px-3 md:px-3 lg:px-4 py-2 md:py-2 rounded-full whitespace-nowrap",
-                "text-[10px] md:text-[10px] lg:text-[12px] font-bold uppercase tracking-[0.12em] md:tracking-[0.18em] lg:tracking-[0.22em]",
-                "transition-colors duration-300",
-                active ? "text-white" : "text-white/55 hover:text-white",
-                isSecondary && idx === 5 ? "ml-2 md:ml-2" : "", // Add spacing before Lab
+                "relative shrink-0 px-2.5 sm:px-3 lg:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-full whitespace-nowrap",
+                "text-[9px] sm:text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] lg:tracking-[0.2em]",
+                "transition-all duration-300",
+                active ? "text-white" : "text-white/65 hover:text-white/90",
+                isSecondary && idx === 5 ? "ml-1 sm:ml-2" : "", // Add spacing before Lab
               ].join(" ")}
             >
               {pillOn ? (
                 <motion.span
                   layoutId={active ? "ay-nav-active" : "ay-nav-hover"}
-                  className="absolute inset-0 rounded-full"
+                  className="absolute inset-0 rounded-lg sm:rounded-full"
                   style={{
                     background: active
-                      ? "linear-gradient(180deg, rgb(var(--ay-accent-rgb) / 0.22), rgb(var(--ay-glow-rgb) / 0.10))"
-                      : "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03))",
+                      ? "linear-gradient(180deg, rgb(var(--ay-accent-rgb) / 0.25), rgb(var(--ay-glow-rgb) / 0.12))"
+                      : "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))",
                     boxShadow: active
-                      ? "0 0 26px rgb(var(--ay-glow-rgb) / 0.22)"
-                      : "0 0 14px rgba(255,255,255,0.08)",
+                      ? "0 0 28px rgb(var(--ay-glow-rgb) / 0.28)"
+                      : "0 0 16px rgba(255,255,255,0.1)",
                   }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 />
               ) : null}
 
@@ -182,10 +182,10 @@ export default function Navbar() {
               {active ? (
                 <motion.span
                   layoutId="ay-nav-underline"
-                  className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full"
+                  className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-5 h-[2.5px] rounded-full"
                   style={{
-                    background: "rgb(var(--ay-accent-rgb) / 0.95)",
-                    boxShadow: "0 0 12px rgb(var(--ay-glow-rgb) / 0.55)",
+                    background: "rgb(var(--ay-accent-rgb) / 1)",
+                    boxShadow: "0 0 14px rgb(var(--ay-glow-rgb) / 0.6)",
                   }}
                 />
               ) : null}

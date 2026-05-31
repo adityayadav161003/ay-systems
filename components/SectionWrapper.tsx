@@ -22,29 +22,29 @@ export default function SectionWrapper({
 }: Props) {
   const sectionMinHeight = fullHeight ? "min-h-screen" : "min-h-0"
   const sectionAlign = fullHeight ? "items-center" : "items-start"
-  const sectionPaddingY = fullHeight ? "py-20 md:py-32" : "py-16 md:py-24"
+  const sectionPaddingY = fullHeight ? "py-24 md:py-36 lg:py-40" : "py-16 md:py-28 lg:py-32"
   const panelShell = plain
     ? "bg-transparent border-none backdrop-blur-none shadow-none"
-    : "bg-white/[0.02] backdrop-blur-2xl border border-white/10 shadow-[0_0_80px_rgba(255,255,255,0.02)]"
-  const panelPadding = noPadding ? "p-0" : "p-6 md:p-16 lg:p-24"
+    : "bg-white/[0.025] backdrop-blur-2xl border border-white/12 shadow-[0_0_80px_rgba(255,255,255,0.03)] hover:border-white/16 transition-colors duration-500"
+  const panelPadding = noPadding ? "p-0" : "p-6 sm:p-10 md:p-16 lg:p-24 xl:p-28"
 
   return (
     <section
       id={id}
-      className={`relative ${sectionMinHeight} px-4 md:px-8 lg:px-12 ${sectionPaddingY} flex ${sectionAlign} justify-center overflow-hidden ${className}`}
+      className={`relative ${sectionMinHeight} px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 ${sectionPaddingY} flex ${sectionAlign} justify-center overflow-hidden ${className}`}
     >
       <motion.div
-        initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
+        initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ 
           duration: 1, 
           ease: [0.16, 1, 0.3, 1], 
-          delay: 0.1 
+          delay: 0.05 
         }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-150px" }}
         className={[
-          "w-full max-w-[1240px]",
-          "rounded-[2.5rem] md:rounded-[4rem]",
+          "w-full max-w-[1320px]",
+          "rounded-2xl md:rounded-3xl lg:rounded-4xl",
           panelShell,
           panelPadding,
           "relative z-10",
@@ -53,8 +53,12 @@ export default function SectionWrapper({
         {children}
       </motion.div>
       
-      {/* Subtle background glow for each section */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full max-h-96 bg-blue-500/5 blur-[120px] rounded-full pointer-events-none -z-10 opacity-30" />
+      {/* Premium subtle background glow for each section */}
+      <motion.div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-full max-h-[500px] bg-blue-500/4 blur-3xl rounded-full pointer-events-none -z-10 opacity-40"
+        animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
     </section>
   )
 }
