@@ -206,9 +206,8 @@ export default function Hero() {
               rel="noopener noreferrer"
               className="group relative flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-white text-black text-sm md:text-base font-bold rounded-full transition-all duration-500 hover:pr-10 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] overflow-hidden"
             >
-              <span className="relative z-10 flex items-center gap-2">
-                View Projects
-                <ArrowRight size={18} />
+              <span className="relative z-10">
+                Resume
               </span>
               <div className="absolute right-4 translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
                 <ArrowRight size={18} />
