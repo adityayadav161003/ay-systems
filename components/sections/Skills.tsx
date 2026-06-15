@@ -5,33 +5,43 @@ import { motion, Variants } from "framer-motion"
 
 const skillCategories = [
   {
+    icon: "🧠",
+    title: "Generative AI",
+    skills: ["RAG", "LangChain", "Prompt Engineering", "AI Agents", "LLM Applications", "Vector Databases", "FAISS"],
+  },
+  {
     icon: "⚙️",
-    title: "Core Intelligence Stack",
-    skills: ["Python", "scikit-learn", "NumPy", "Pandas", "LLMs", "Generative AI", "AutoML", "Feature Engineering", "Model Evaluation"],
+    title: "Machine Learning",
+    skills: ["Scikit-Learn", "TensorFlow", "PyTorch", "Model Evaluation", "Feature Engineering"],
+  },
+  {
+    icon: "💬",
+    title: "NLP",
+    skills: ["SpaCy", "NLTK", "Text Processing", "Semantic Search"],
   },
   {
     icon: "👁",
-    title: "Perception & Vision",
-    skills: ["OpenCV", "MediaPipe", "Real-Time Pipelines", "Gesture Recognition", "Computer Vision"],
-  },
-  {
-    icon: "🏗",
-    title: "Systems & Architecture",
-    skills: ["Pipeline Design", "Config-Driven Workflows", "Orchestration", "Experiment Tracking", "Artifact Management", "Modular Architecture"],
-  },
-  {
-    icon: "🌐",
-    title: "Web & Deployment",
-    skills: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "REST APIs", "Git", "GitHub", "Vercel"],
+    title: "Computer Vision",
+    skills: ["OpenCV", "MediaPipe"],
   },
   {
     icon: "📊",
-    title: "Data & Analysis",
-    skills: ["SQL", "EDA", "Data Cleaning", "Excel", "Jupyter", "Matplotlib", "Seaborn"],
+    title: "Data Science",
+    skills: ["Pandas", "NumPy", "EDA", "Data Cleaning"],
+  },
+  {
+    icon: "💻",
+    title: "Programming",
+    skills: ["Python", "JavaScript", "SQL"],
+  },
+  {
+    icon: "🛠",
+    title: "Tools",
+    skills: ["Git", "GitHub", "VS Code"],
   },
 ]
 
-const currentlyWiring = ["RAG", "Vector Databases", "MLflow", "Docker", "FastAPI", "Hugging Face Transformers", "LangChain"]
+const currentlyWiring = ["Hugging Face Transformers", "FastAPI", "Docker", "MLflow", "Ollama", "Multi-Agent Systems"]
 
 export default function Skills() {
   const categoryVariants: Variants = {

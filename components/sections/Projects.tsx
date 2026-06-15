@@ -8,123 +8,93 @@ import { useEffect, useMemo, useState, type ReactNode } from "react"
 const projects = [
   {
     id: 1,
-    title: "AY Systems — Agent-Based AutoML Pipeline",
+    title: "Orvika AI — Privacy-First Research Assistant",
     description:
-      "A modular AutoML pipeline built around an orchestrator + specialized agents for preprocessing, feature engineering, training, evaluation, and export.",
-    impact: "Flagship · End-to-end ML workflow",
-    tech: ["Python", "scikit-learn", "Pandas", "Streamlit", "Orchestration"],
+      "A privacy-first AI assistant designed for secure document analysis, research augmentation, and intelligent knowledge retrieval using Retrieval-Augmented Generation.",
+    impact: "Flagship Project · Generative AI",
+    tech: ["Python", "LangChain", "FAISS", "RAG", "LLMs", "NLP", "Vector Databases", "Tauri", "React"],
     highlights: [
-      { label: "Built", text: "Config-driven stages: data → features → train → evaluate → report/artifacts." },
-      { label: "Why", text: "Moves beyond notebooks by enforcing repeatability, logging, and comparable experiments." },
-      { label: "Ownership", text: "Designed and implemented end-to-end (architecture → code → UX)." },
+      { label: "Built", text: "Retrieval-Augmented Generation (RAG) architecture supporting PDF, DOCX, PPTX, TXT, audio, and video analysis." },
+      { label: "Privacy", text: "Sensitive documents never leave the user's device — privacy-first local AI reasoning combined with cloud-based research workflows." },
+      { label: "Impact", text: "Generates grounded, citation-backed insights from large document collections for researchers, analysts, and organizations handling confidential data." },
     ],
-    links: [{ kind: "github", href: "https://github.com/adityayadav161003/ay-systems", label: "Repo" }],
+    links: [{ kind: "private", label: "Private Repo — demo available" }],
     deepDive: {
       problem:
-        "Most student ML projects stop at a notebook. I wanted a repeatable workflow that can run end-to-end on new tabular datasets with consistent preprocessing, evaluation, and artifacts.",
+        "Professionals and researchers handling sensitive documents need AI-powered analysis without compromising data privacy. Existing cloud-based AI tools require uploading confidential files to external servers — an unacceptable risk for many organizations.",
       approach:
-        "I split the pipeline into an orchestrator + specialized agents. Each agent owns a stage (data, features, training, evaluation, reporting) and communicates through structured outputs so experiments remain comparable.",
+        "Built a privacy-first RAG architecture where document processing and vector retrieval happen entirely on the user's device using FAISS and local LLM reasoning. Cloud workflows are only triggered for non-sensitive research augmentation tasks, keeping confidential data local at all times.",
       flow: [
-        "Data ingestion (CSV / dataset config)",
-        "Preprocessing (missing values, encoding decisions, scaling)",
-        "Feature engineering stage",
-        "Model training (multiple candidates)",
-        "Evaluation (task-appropriate metrics)",
-        "Export artifacts (model + report)",
+        "Document ingestion (PDF, DOCX, PPTX, TXT, audio, video)",
+        "Chunking and embedding generation (local)",
+        "FAISS vector index construction and storage",
+        "Semantic search and context retrieval",
+        "LLM reasoning with citation-backed response generation",
+        "Privacy-isolated local inference for sensitive queries",
       ],
       results: [
-        "Reliable runs with consistent outputs and logs.",
-        "Comparable experiments across models via standardized evaluation.",
-        "Artifacts exported for later reuse (model + report).",
+        "Privacy-first architecture ensuring sensitive documents never leave the user's device.",
+        "Supports multi-format document analysis including audio and video transcription.",
+        "Generates grounded, citation-backed insights from large document collections.",
+        "Designed for production-scale use by researchers, analysts, and organizations.",
       ],
       tradeoffs: [
-        "Kept model search lightweight (internship-ready) rather than building a full hyperparameter platform.",
-        "Prioritized clarity and extensibility over squeezing max leaderboard accuracy.",
+        "Prioritized privacy and local processing over cloud-based performance optimizations.",
+        "Chose FAISS for efficient local vector retrieval over managed vector database services.",
       ],
       challenges: [
-        "Designing interfaces between agents so later stages don’t depend on hidden state.",
-        "Avoiding one-off preprocessing that breaks comparability across runs.",
+        "Designing a hybrid local/cloud architecture that maintains strict privacy boundaries.",
+        "Optimizing retrieval quality across heterogeneous document types and formats.",
       ],
       next: [
-        "Add dataset schema validation + stronger leakage checks.",
-        "Add experiment tracking with versioned configs and a comparison view.",
+        "Add multi-document cross-referencing and knowledge graph construction.",
+        "Implement fine-tuned domain-specific embedding models for specialized research fields.",
       ],
     },
     featured: true,
   },
   {
     id: 2,
-    title: "GestureWave AI",
+    title: "GestureWave AI — Touch-Free Gesture Control",
     description:
-      "A real-time, touch-free gesture control prototype using OpenCV + MediaPipe to track hands and map gestures to actions.",
+      "A real-time computer vision application enabling touch-free interaction through hand gesture recognition powered by MediaPipe and OpenCV.",
     impact: "Computer Vision · Real-time interaction",
-    tech: ["OpenCV", "MediaPipe", "Python", "Computer Vision"],
+    tech: ["Python", "OpenCV", "MediaPipe", "Machine Learning", "Computer Vision"],
     highlights: [
-      { label: "Built", text: "Hand tracking + gesture recognition loop designed for real-time feedback (20–25 FPS)." },
-      { label: "Focus", text: "Latency, stability, and clean gesture-to-action mapping." },
-      { label: "Ownership", text: "Implemented the full CV pipeline and interaction logic." },
+      { label: "Built", text: "Real-time hand tracking and gesture classification pipeline optimized for 20–25 FPS low-latency interaction." },
+      { label: "Focus", text: "Stability, latency optimization, and clean gesture-to-action mapping with smoothing and debouncing." },
+      { label: "Ownership", text: "Implemented the full CV pipeline, gesture recognition logic, and interaction system end-to-end." },
     ],
     links: [{ kind: "private", label: "Private Repo — demo available" }],
     deepDive: {
       problem:
-        "Build a touch-free interaction prototype that feels responsive in real time, not just a vision demo.",
+        "Build a touch-free interaction prototype that feels genuinely responsive in real time — not just a computer vision demo, but a practical touchless control system.",
       approach:
-        "Use MediaPipe for hand landmarks, extract simple gesture signals, and map them into stable actions with smoothing so the UI doesn’t jitter.",
+        "Used MediaPipe for robust hand landmark detection, extracted gesture signals from relative landmark positions, and applied smoothing and debouncing to ensure stable, jitter-free action mapping at real-time frame rates.",
       flow: [
         "Webcam frame capture",
         "Hand landmark detection (MediaPipe)",
         "Gesture feature extraction (relative positions / thresholds)",
-        "Smoothing + debouncing",
+        "Smoothing + debouncing pipeline",
         "Gesture → action mapping",
         "Real-time feedback loop (20–25 FPS target)",
       ],
       results: [
-        "Real-time loop at ~20–25 FPS in typical conditions.",
-        "Stable interaction patterns via smoothing and thresholds.",
+        "Real-time gesture recognition loop at ~20–25 FPS under typical conditions.",
+        "Stable touchless interaction patterns via smoothing and threshold calibration.",
+        "Practical touchless system control demonstrating real-world computer vision deployment.",
       ],
       tradeoffs: [
-        "Chose a simpler gesture set for reliability over supporting many complex gestures.",
-        "Optimized for responsiveness and stability rather than perfect classification accuracy.",
+        "Chose a focused gesture set for reliability and stability over supporting many complex gestures.",
+        "Optimized for responsiveness and consistent UX rather than maximum classification accuracy.",
       ],
-      challenges: ["Jittery detections in imperfect lighting.", "Balancing sensitivity vs false triggers."],
-      next: ["Add calibration mode per user.", "Add a lightweight model-based gesture classifier for ambiguous cases."],
+      challenges: ["Handling jittery landmark detections in varied lighting conditions.", "Balancing gesture sensitivity vs false trigger rate."],
+      next: ["Add per-user calibration mode for personalized gesture sensitivity.", "Add a lightweight model-based gesture classifier for ambiguous cases."],
     },
     featured: false,
   },
   {
     id: 3,
-    title: "AutoML Engine for Tabular Data",
-    description:
-      "A tabular ML automation tool that standardizes preprocessing, compares multiple models, and surfaces metrics in a consistent format.",
-    impact: "ML Tooling · Faster experiments",
-    tech: ["scikit-learn", "EDA", "Feature Engineering", "Model Evaluation"],
-    highlights: [
-      { label: "Built", text: "Automated preprocessing + model comparison with consistent evaluation outputs." },
-      { label: "Outcome", text: "Reduced repetitive setup work (~15% faster iteration in my experiments)." },
-      { label: "Ownership", text: "Built to make experimentation repeatable and easy to extend." },
-    ],
-    links: [{ kind: "private", label: "Private Repo — demo available" }],
-    deepDive: {
-      problem:
-        "Training tabular models repeatedly involves the same setup work. I wanted a small tool that standardizes preprocessing + evaluation so comparisons are faster and fair.",
-      approach:
-        "Automate preprocessing steps (missing values, encoding, scaling), run a small set of candidate models, and output consistent metrics and summaries.",
-      flow: [
-        "Dataset load + target selection",
-        "Preprocessing config (encoding/scaling/imputation)",
-        "Candidate model training",
-        "Evaluation (task-aware metrics)",
-        "Rank + summarize results",
-      ],
-      results: ["~15% faster iteration in my experiments by cutting repetitive setup.", "More consistent comparisons across models."],
-      tradeoffs: ["Kept the model set compact to stay fast and readable.", "Focused on reproducibility over exhaustive search."],
-      challenges: ["Handling mixed categorical + numeric data cleanly.", "Avoiding evaluation noise from inconsistent splits."],
-      next: ["Add cross-validation option + confidence intervals.", "Add model card export for best run."],
-    },
-    featured: false,
-  },
-  {
-    id: 4,
     title: "Netflix Content Intelligence",
     description:
       "End-to-end exploratory analysis of Netflix's global content library — distribution patterns, top content-producing countries, genre trends, and content growth over time.",
@@ -132,7 +102,7 @@ const projects = [
     tech: ["Python", "Pandas", "Seaborn", "Matplotlib", "Jupyter"],
     highlights: [
       { label: "Built", text: "Real insight extraction from Netflix's public dataset using systematic EDA techniques." },
-      { label: "Outcome", text: "Discovered content distribution patterns and growth trends with visual storytelling." },
+      { label: "Outcome", text: "Discovered content distribution patterns and growth trends with clear visual storytelling." },
       { label: "Focus", text: "Data-driven analysis over toy demos — extracting meaning from messy real-world data." },
     ],
     links: [
@@ -140,7 +110,7 @@ const projects = [
     ],
     deepDive: {
       problem:
-        "Public datasets are everywhere but analysis work is rare. I wanted to practice systematic EDA on a real, interesting dataset: Netflix's global content library.",
+        "Public datasets are everywhere but deep analysis work is rare. I wanted to practice systematic EDA on a real, interesting dataset: Netflix's global content library.",
       approach:
         "Load the dataset, understand distributions, identify trends, and visualize patterns that matter: which countries produce most content, genre popularity shifts, impact of releases over time.",
       flow: [
@@ -148,21 +118,21 @@ const projects = [
         "Distribution analysis (content types, genres, countries)",
         "Time-series trends (when content added over time)",
         "Geographic insights (top-producing countries)",
-        "Growth patterns and shifts",
+        "Growth patterns and content strategy shifts",
       ],
       results: [
         "Clear visualization of content distribution across countries and genres.",
-        "Identified growth trends in Netflix's library over years.",
-        "Demonstrated impact of regional content strategies.",
+        "Identified growth trends in Netflix's library over multiple years.",
+        "Demonstrated impact of regional content strategies through data.",
       ],
-      tradeoffs: ["Focused on visualization clarity over advanced statistical modeling.", "Public dataset so no proprietary insights."],
-      challenges: ["Handling missing or inconsistent data in real public datasets.", "Finding narratives in raw data."],
+      tradeoffs: ["Focused on visualization clarity over advanced statistical modeling.", "Public dataset so analysis reflects publicly available information."],
+      challenges: ["Handling missing or inconsistent data in real public datasets.", "Finding coherent narratives in raw multi-dimensional data."],
       next: ["Add predictive model for future content trends.", "Extend analysis to IMDb ratings correlation."],
     },
     featured: false,
   },
   {
-    id: 5,
+    id: 4,
     title: "IPL Cricket Performance Analytics",
     description:
       "Deep analysis of IPL datasets — player performance metrics, run scorers, wicket takers, team statistics, and toss impact. Real-world sports data wrangling and insight storytelling.",
@@ -187,19 +157,19 @@ const projects = [
         "Player-level metrics (runs, wickets, consistency)",
         "Team statistics aggregation",
         "Pattern discovery (toss, batting order, performance trends)",
-        "Visualization + narrative",
+        "Visualization + narrative storytelling",
       ],
       results: [
         "Identified top run-scorers and wicket-takers across seasons.",
-        "Quantified toss impact on match outcomes.",
-        "Discovered patterns in team performance and strategy.",
+        "Quantified toss impact on match outcomes with data evidence.",
+        "Discovered patterns in team performance and strategic decisions.",
       ],
-      tradeoffs: ["Focused on clarity for sports analysts over advanced ML.", "Public datasets with known biases."],
-      challenges: ["Handling inconsistent data formats across seasons.", "Normalizing metrics across different eras of the league."],
-      next: ["Add predictive model for match outcomes.", "Build interactive dashboard for trend exploration."],
+      tradeoffs: ["Focused on clarity for sports analysts over advanced ML modeling.", "Public datasets with known collection biases accounted for."],
+      challenges: ["Handling inconsistent data formats across different IPL seasons.", "Normalizing player metrics across different eras of the league."],
+      next: ["Add predictive model for match outcome prediction.", "Build interactive dashboard for real-time trend exploration."],
     },
     featured: false,
-  }
+  },
 ]
 
 type ProjectLink =
@@ -242,7 +212,7 @@ export default function Projects() {
               Featured <span className="text-white/40 italic">Projects.</span>
             </h2>
             <p className="text-gray-400 max-w-xl text-lg leading-relaxed">
-              Five builds that show how I work: production ML pipelines, real-time CV, tooling, data analysis, and sports analytics.
+              Four builds that show how I work: privacy-first Generative AI, real-time computer vision, and real-world data analysis.
             </p>
           </div>
         </div>

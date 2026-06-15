@@ -14,12 +14,12 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: "Aditya Yadav — I Build Things That Think",
-  description: "AI engineer, systems architect, and AutoML builder. Engineering intelligent systems at the intersection of code and intelligence. Based in Mathura, India. Open to AI/ML internships 2026.",
-  keywords: "AI engineer, machine learning, systems architect, AutoML, data analyst, Python, deep learning, GLA University",
+  title: "Aditya Yadav | AI/ML Engineer | Generative AI Developer",
+  description: "AI/ML Engineer specializing in Generative AI, Retrieval-Augmented Generation (RAG), NLP, Computer Vision, and intelligent document analysis systems.",
+  keywords: "AI Engineer, Machine Learning, Generative AI, RAG, LangChain, LLM, NLP, Computer Vision, FAISS, Python, Artificial Intelligence, AI Developer",
   openGraph: {
-    title: "Aditya Yadav — I Build Things That Think",
-    description: "Engineering intelligent systems — pipelines, models, metrics, and real outputs.",
+    title: "Aditya Yadav | AI/ML Engineer | Generative AI Developer",
+    description: "AI/ML Engineer specializing in Generative AI, Retrieval-Augmented Generation (RAG), NLP, Computer Vision, and intelligent document analysis systems.",
   },
 };
 

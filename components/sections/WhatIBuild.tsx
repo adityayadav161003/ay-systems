@@ -1,27 +1,27 @@
 import SectionWrapper from "@/components/SectionWrapper"
 import { motion } from "framer-motion"
-import { Cpu, Camera, BarChart4, Code2, Layers } from "lucide-react"
+import { Cpu, Camera, BarChart4, BrainCircuit, Layers } from "lucide-react"
 
 const items = [
   {
+    title: "Generative AI & RAG Systems",
+    icon: <BrainCircuit className="text-blue-400" size={24} />,
+    description: "Privacy-first AI assistants with RAG architecture, semantic vector retrieval, and LLM reasoning for document intelligence."
+  },
+  {
     title: "Machine Learning Pipelines",
-    icon: <Cpu className="text-blue-400" size={24} />,
-    description: "Repeatable workflows for preprocessing, training, evaluation, and export."
+    icon: <Cpu className="text-cyan-400" size={24} />,
+    description: "End-to-end ML workflows for preprocessing, feature engineering, model training, evaluation, and deployment."
   },
   {
     title: "Computer Vision Systems",
     icon: <Camera className="text-emerald-400" size={24} />,
-    description: "Real-time gesture recognition with a focus on latency and stability."
+    description: "Real-time gesture recognition and vision pipelines with a focus on low latency and stable interaction."
   },
   {
-    title: "Data Analysis Workflows",
+    title: "Data Analysis & Insights",
     icon: <BarChart4 className="text-purple-400" size={24} />,
-    description: "Cleaning, EDA, and clear reporting to surface useful signals."
-  },
-  {
-    title: "Modern Web Interfaces",
-    icon: <Code2 className="text-orange-400" size={24} />,
-    description: "Scalable, high-performance digital platforms with recruiter-friendly UX."
+    description: "Systematic EDA, data cleaning, and visual storytelling to surface actionable signals from real-world datasets."
   }
 ]
 
@@ -41,7 +41,7 @@ export default function WhatIBuild() {
             <div className="h-1.5 w-24 bg-blue-500 rounded-full mx-auto lg:ml-0" />
           </div>
           <p className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0">
-            I like projects that combine engineering thinking with practical ML: clean inputs, clear evaluation, and interfaces that make the work usable.
+            I build AI systems that combine strong engineering practices with practical intelligence: RAG pipelines, LLM applications, vision systems, and data analysis tools that solve real problems.
           </p>
         </div>
 

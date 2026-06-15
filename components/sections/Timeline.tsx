@@ -9,21 +9,21 @@ const timeline = [
     date: "Summer 2024",
     icon: <Briefcase className="text-blue-400" size={24} />,
     description: [
-      "Fraud transaction classification system (Python, scikit-learn) achieving ~85–90% accuracy — full lifecycle ownership from data prep to evaluation.",
-      "Java-based data processing pipeline for transaction ingestion, delivering ~20% throughput improvement.",
-      "Generative AI proof-of-concept for synthetic training data generation, resulting in ~10% model robustness improvement.",
-      "Structured experiment logs with metric tracking and iterative refinement based on error patterns."
+      "Developed fraud detection models using deep learning techniques achieving ~85–90% accuracy — full lifecycle ownership from data prep to model evaluation.",
+      "Performed feature engineering and data preprocessing to improve model signal quality.",
+      "Built and evaluated machine learning pipelines using TensorFlow, Python, and modern ML workflows.",
+      "Improved model performance through iterative experimentation, tuning, and structured metric tracking."
     ]
   },
   {
-    title: "Independent Systems Builder",
+    title: "Independent AI Systems Builder",
     company: "Self-Directed",
     date: "2024 – Present",
     icon: <Briefcase className="text-cyan-400" size={24} />,
     description: [
-      "Building production-quality intelligent systems, data tools, and AI-powered interfaces.",
-      "Real engineering work: pipelines, models, metrics — not coursework exercises.",
-      "Focus on measurable results, clean architecture, and systems that scale."
+      "Building production-grade AI applications including Orvika AI, a privacy-first RAG research assistant.",
+      "Designing and implementing Generative AI systems with LangChain, FAISS, and local LLM reasoning.",
+      "Delivering real engineering work: RAG pipelines, vector retrieval, NLP, and computer vision systems."
     ]
   },
   {
@@ -52,8 +52,8 @@ const timeline = [
 const certifications = [
   { title: "HP LIFE — Data Science & Analytics", date: "2024" },
   { title: "Deloitte Australia — Technology Job Simulation", date: "2024" },
-  { title: "In Progress: Google ML Crash Course", date: "2024-2025" },
-  { title: "In Progress: AWS Cloud Practitioner", date: "2024-2025" },
+  { title: "Generative AI & RAG System Development (Orvika AI)", date: "2025" },
+  { title: "AI Product Design & Architecture Experience", date: "2025" },
 ]
 
 export default function Timeline() {

@@ -17,10 +17,10 @@ export default function About() {
   }
 
   const statusItems = [
-    { icon: "🟢", label: "Building", value: "AY Systems AutoML Pipeline" },
-    { icon: "🟡", label: "Exploring", value: "LLM reasoning, RAG pipelines, MLOps" },
+    { icon: "🟢", label: "Building", value: "Orvika AI — Privacy-First Research Assistant" },
+    { icon: "🟡", label: "Exploring", value: "RAG architectures, LLM agents, vector retrieval" },
     { icon: "🔵", label: "Reading", value: '"Designing ML Systems" — Chip Huyen' },
-    { icon: "🟣", label: "Open to", value: "AI/ML Engineering internships (2026)" },
+    { icon: "🟣", label: "Open to", value: "AI/ML Engineering roles & internships (2026)" },
     { icon: "⚪", label: "Based in", value: "Mathura, India" },
   ]
 
@@ -42,13 +42,13 @@ export default function About() {
           
           <div className="space-y-6 text-gray-400 text-base md:text-lg leading-relaxed font-medium">
             <p>
-              B.Tech Computer Science student at GLA University. Engineer systems at the intersection of code and intelligence.
+              Computer Science student at GLA University with a strong passion for AI and Machine Learning. I focus on building intelligent software systems powered by large language models, semantic retrieval, and real-world ML engineering.
             </p>
             <p>
-              I build production-quality ML pipelines — data processing, feature engineering, model training, evaluation, export. Measurable results. Clean implementation. Shipping.
+              My work spans Generative AI, Retrieval-Augmented Generation (RAG), NLP, Computer Vision, and AI product development. From privacy-first document intelligence systems to real-time gesture recognition — I care about creating AI that solves real problems.
             </p>
             <p>
-              Worked across AutoML tooling, fraud detection systems, and real-time computer vision. I care about architectures that scale, metrics that matter, and code that other people can run.
+              I enjoy transforming complex ideas into practical applications with strong engineering practices, measurable outcomes, and meaningful user experiences.
             </p>
           </div>
         </motion.div>

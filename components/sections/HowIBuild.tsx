@@ -6,22 +6,22 @@ import SectionWrapper from "@/components/SectionWrapper"
 export default function HowIBuild() {
   const philosophies = [
     {
-      title: "Systems, Not Scripts",
-      description: "Every project I build has a defined pipeline, config-driven stages, and a clear evaluation harness. Not notebooks. Not one-offs. Architecture.",
+      title: "Privacy Is a Feature",
+      description: "I design AI systems where privacy is a first-class concern. Sensitive data stays local, retrieval happens on-device, and cloud workflows are only used where privacy boundaries are clear.",
       color: "from-cyan-500/20",
       borderColor: "border-cyan-500/30",
       accentColor: "bg-cyan-500/20",
     },
     {
-      title: "Metrics Or It Didn't Happen",
-      description: "Claims without numbers are noise. Every model I ship has a baseline comparison, performance benchmarks, and measurable improvements tracked end-to-end.",
+      title: "Grounded AI, Not Hallucination",
+      description: "LLMs alone make things up. I build RAG systems that ground every response in real documents with source citations — because intelligence without evidence is just noise.",
       color: "from-amber-500/20",
       borderColor: "border-amber-500/30",
       accentColor: "bg-amber-500/20",
     },
     {
       title: "Ship. Measure. Iterate.",
-      description: "A working v1 deployed beats a perfect v0 in a notebook. Real systems teach you what matters. I ship early, measure precisely, and iterate on real data.",
+      description: "A working v1 deployed beats a perfect v0 in a notebook. Real systems teach you what matters. I ship early, measure retrieval quality and model performance, then iterate on real data.",
       color: "from-violet-500/20",
       borderColor: "border-violet-500/30",
       accentColor: "bg-violet-500/20",

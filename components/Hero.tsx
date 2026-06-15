@@ -44,7 +44,7 @@ export default function Hero() {
   }
 
   // Typewriter effect for tagline
-  const taglineText = "I build things that think."
+  const taglineText = "Building Privacy-First AI Systems."
   const taglineLetters = taglineText.split("")
   const taglineVariants: Variants = {
     hidden: { opacity: 0 },
@@ -167,7 +167,7 @@ export default function Hero() {
 
             {/* Role pills */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-2">
-              {["Engineer", "Builder", "Thinker"].map((role, i) => (
+              {["AI/ML Engineer", "Generative AI Builder", "RAG Systems"].map((role, i) => (
                 <motion.div
                   key={i}
                   custom={i}
@@ -189,12 +189,12 @@ export default function Hero() {
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/30 bg-cyan-400/5 text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-cyan-300">
                 <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                Open to AI/ML Internships — 2026
+                Open to AI/ML Opportunities — 2026
               </div>
             </motion.div>
 
             <p className="text-base md:text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              I engineer systems at the intersection of code and intelligence. Built to process, think, and ship. AutoML pipelines. Data architectures. Real outputs.
+              I design and build AI-powered applications that combine machine learning, large language models, semantic retrieval, and real-world problem solving. Focused on creating practical AI systems that are secure, scalable, and useful in production.
             </p>
           </motion.div>
 
@@ -207,7 +207,7 @@ export default function Hero() {
               className="group relative flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-white text-black text-sm md:text-base font-bold rounded-full transition-all duration-500 hover:pr-10 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
-                View Resume
+                View Projects
                 <ArrowRight size={18} />
               </span>
               <div className="absolute right-4 translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
@@ -273,7 +273,7 @@ export default function Hero() {
             >
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
-                <span className="text-xs font-bold text-cyan-300 tracking-widest uppercase">AI/ML Internships</span>
+                <span className="text-xs font-bold text-cyan-300 tracking-widest uppercase">Open to AI/ML Roles</span>
               </div>
             </motion.div>
           </div>
