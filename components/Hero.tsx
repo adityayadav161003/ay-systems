@@ -167,7 +167,7 @@ export default function Hero() {
 
             {/* Role pills */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-2">
-              {["AI/ML Engineer", "Generative AI Builder", "RAG Systems"].map((role, i) => (
+              {["AI Engineer @ Blinx Lab", "Generative AI & LLMs", "RAG Systems", "Machine Learning"].map((role, i) => (
                 <motion.div
                   key={i}
                   custom={i}
@@ -189,12 +189,12 @@ export default function Hero() {
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/30 bg-cyan-400/5 text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-cyan-300">
                 <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                Open to AI/ML Opportunities — 2026
+                AI Engineer @ Blinx Lab — 2026
               </div>
             </motion.div>
 
             <p className="text-base md:text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              I design and build AI-powered applications that combine machine learning, large language models, semantic retrieval, and real-world problem solving. Focused on creating practical AI systems that are secure, scalable, and useful in production.
+              AI Engineer developing AI-powered products, LLM applications, automation workflows, and full-stack solutions. Experienced in Generative AI, RAG systems, machine learning pipelines, and computer vision.
             </p>
           </motion.div>
 
@@ -212,6 +212,15 @@ export default function Hero() {
               <div className="absolute right-4 translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
                 <ArrowRight size={18} />
               </div>
+            </a>
+
+            <a 
+              href="/my%20older%20cv.pdf" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3 md:py-4 border border-white/10 hover:border-white/30 bg-white/[0.03] hover:bg-white/[0.08] rounded-full text-xs md:text-sm font-semibold text-gray-400 hover:text-white transition-all duration-300"
+            >
+              Older CV
             </a>
             
             <div className="flex gap-4">

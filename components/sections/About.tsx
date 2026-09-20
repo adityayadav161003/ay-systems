@@ -17,11 +17,11 @@ export default function About() {
   }
 
   const statusItems = [
-    { icon: "🟢", label: "Building", value: "Orvika AI — Privacy-First Research Assistant" },
-    { icon: "🟡", label: "Exploring", value: "RAG architectures, LLM agents, vector retrieval" },
-    { icon: "🔵", label: "Reading", value: '"Designing ML Systems" — Chip Huyen' },
-    { icon: "🟣", label: "Open to", value: "AI/ML Engineering roles & internships (2026)" },
-    { icon: "⚪", label: "Based in", value: "Mathura, India" },
+    { icon: "💼", label: "Working at", value: "Blinx Lab — AI Engineer (LLM apps, full-stack AI, automation)" },
+    { icon: "🟢", label: "Building", value: "Orvika AI (Privacy-First RAG) & GestureWave AI" },
+    { icon: "🟡", label: "Exploring", value: "Agentic AI, multi-model research agents, WhatsApp Cloud API" },
+    { icon: "🟣", label: "Open to", value: "AI/ML Engineering roles & collaborations" },
+    { icon: "⚪", label: "Based in", value: "Mathura, Uttar Pradesh, India" },
   ]
 
   return (
@@ -42,10 +42,10 @@ export default function About() {
           
           <div className="space-y-6 text-gray-400 text-base md:text-lg leading-relaxed font-medium">
             <p>
-              Computer Science student at GLA University with a strong passion for AI and Machine Learning. I focus on building intelligent software systems powered by large language models, semantic retrieval, and real-world ML engineering.
+              AI Engineer at Blinx Lab and Computer Science student at GLA University with hands-on experience developing machine learning classification models, data analysis pipelines, and production-ready LLM applications.
             </p>
             <p>
-              My work spans Generative AI, Retrieval-Augmented Generation (RAG), NLP, Computer Vision, and AI product development. From privacy-first document intelligence systems to real-time gesture recognition — I care about creating AI that solves real problems.
+              My work spans Generative AI, Retrieval-Augmented Generation (RAG), agentic workflows, computer vision, and full-stack AI systems. From WhatsApp automation and document intelligence to real-time gesture recognition — I focus on creating AI products that solve real-world business problems.
             </p>
             <p>
               I enjoy transforming complex ideas into practical applications with strong engineering practices, measurable outcomes, and meaningful user experiences.

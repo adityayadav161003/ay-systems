@@ -14,11 +14,14 @@ const projects = [
     impact: "Flagship Project · Generative AI",
     tech: ["Python", "LangChain", "FAISS", "RAG", "LLMs", "NLP", "Vector Databases", "Tauri", "React"],
     highlights: [
-      { label: "Built", text: "Retrieval-Augmented Generation (RAG) architecture supporting PDF, DOCX, PPTX, TXT, audio, and video analysis." },
-      { label: "Privacy", text: "Sensitive documents never leave the user's device — privacy-first local AI reasoning combined with cloud-based research workflows." },
-      { label: "Impact", text: "Generates grounded, citation-backed insights from large document collections for researchers, analysts, and organizations handling confidential data." },
+      { label: "Built", text: "Retrieval-Augmented Generation (RAG) system for analyzing sensitive documents locally while performing external research through cloud LLMs without exposing user data." },
+      { label: "Pipeline", text: "Document intelligence pipeline supporting PDF, DOCX, PPTX, TXT, audio, and video ingestion using local processing, semantic chunking, embeddings, and FAISS vector search." },
+      { label: "Workflow", text: "Hybrid AI workflow combining local LLM reasoning, vector retrieval, and multi-model research agents to generate grounded, citation-backed reports." },
+      { label: "Privacy", text: "Privacy-first architecture using local storage, encrypted API key management, audit logging, and transparent outbound request monitoring." },
     ],
-    links: [{ kind: "private", label: "Private Repo — demo available" }],
+    links: [
+      { kind: "github", href: "https://github.com/adityayadav161003/ORVIKA-AI-", label: "GitHub Repo" },
+    ],
     deepDive: {
       problem:
         "Professionals and researchers handling sensitive documents need AI-powered analysis without compromising data privacy. Existing cloud-based AI tools require uploading confidential files to external servers — an unacceptable risk for many organizations.",
@@ -55,17 +58,20 @@ const projects = [
   },
   {
     id: 2,
-    title: "GestureWave AI — Touch-Free Gesture Control",
+    title: "GestureWave AI — Touch-Free Gesture Control System",
     description:
-      "A real-time computer vision application enabling touch-free interaction through hand gesture recognition powered by MediaPipe and OpenCV.",
-    impact: "Computer Vision · Real-time interaction",
-    tech: ["Python", "OpenCV", "MediaPipe", "Machine Learning", "Computer Vision"],
+      "A real-time hand gesture recognition system enabling touch-free computer interaction using Python, OpenCV, MediaPipe, and deep learning techniques.",
+    impact: "Computer Vision · Deep Learning",
+    tech: ["Python", "OpenCV", "MediaPipe", "PyTorch", "Deep Learning", "Computer Vision"],
     highlights: [
-      { label: "Built", text: "Real-time hand tracking and gesture classification pipeline optimized for 20–25 FPS low-latency interaction." },
-      { label: "Focus", text: "Stability, latency optimization, and clean gesture-to-action mapping with smoothing and debouncing." },
-      { label: "Ownership", text: "Implemented the full CV pipeline, gesture recognition logic, and interaction system end-to-end." },
+      { label: "Built", text: "Real-time hand gesture recognition system using Python, OpenCV, MediaPipe, and deep learning techniques." },
+      { label: "Interaction", text: "Hand tracking and gesture classification for touch-free computer interaction." },
+      { label: "Performance", text: "Optimized inference performance for low-latency gesture detection and improved real-time responsiveness." },
+      { label: "Pipeline", text: "Intuitive computer vision pipeline capable of recognizing multiple hand gestures for system control." },
     ],
-    links: [{ kind: "private", label: "Private Repo — demo available" }],
+    links: [
+      { kind: "github", href: "https://github.com/Annaa74/GestureWave-AI", label: "GitHub Repo" },
+    ],
     deepDive: {
       problem:
         "Build a touch-free interaction prototype that feels genuinely responsive in real time — not just a computer vision demo, but a practical touchless control system.",

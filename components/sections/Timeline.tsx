@@ -4,56 +4,55 @@ import { Briefcase, GraduationCap, Award, History } from "lucide-react"
 
 const timeline = [
   {
-    title: "Machine Learning Intern",
-    company: "Intrainz Innovation",
-    date: "Summer 2024",
-    icon: <Briefcase className="text-blue-400" size={24} />,
+    title: "AI Engineer",
+    company: "Blinx Lab",
+    date: "Apr 2026 – Present",
+    icon: <Briefcase className="text-cyan-400" size={24} />,
     description: [
-      "Developed fraud detection models using deep learning techniques achieving ~85–90% accuracy — full lifecycle ownership from data prep to model evaluation.",
-      "Performed feature engineering and data preprocessing to improve model signal quality.",
-      "Built and evaluated machine learning pipelines using TensorFlow, Python, and modern ML workflows.",
-      "Improved model performance through iterative experimentation, tuning, and structured metric tracking."
+      "Developed AI/LLM-powered applications and automation workflows, integrating OpenAI/LLM APIs, document processing, intelligent assistants, and business-specific AI solutions.",
+      "Built full-stack AI products using React, Tailwind CSS, Node.js, FastAPI, and MongoDB, including API integrations, backend services, and production-ready workflows.",
+      "Engineered WhatsApp automation and AI-driven ordering systems using Meta WhatsApp Cloud API, webhooks, payment integration, and analytics-oriented backend services."
     ]
   },
   {
-    title: "Independent AI Systems Builder",
-    company: "Self-Directed",
-    date: "2024 – Present",
-    icon: <Briefcase className="text-cyan-400" size={24} />,
+    title: "Machine Learning Intern",
+    company: "Intrainz Innovation",
+    date: "Oct 2024 – Dec 2024",
+    icon: <Briefcase className="text-blue-400" size={24} />,
     description: [
-      "Building production-grade AI applications including Orvika AI, a privacy-first RAG research assistant.",
-      "Designing and implementing Generative AI systems with LangChain, FAISS, and local LLM reasoning.",
-      "Delivering real engineering work: RAG pipelines, vector retrieval, NLP, and computer vision systems."
+      "Developed a deep learning classification model using neural networks in TensorFlow achieving ~85–90% accuracy in detecting fraudulent transactions.",
+      "Performed data preprocessing, feature engineering, and model training using Python and PyTorch.",
+      "Evaluated model performance using analytical skills to derive insights from accuracy, precision, recall, and confusion matrix."
     ]
   },
   {
     title: "B.Tech in Computer Science",
     company: "GLA University, Mathura",
-    date: "Expected June 2027",
+    date: "Expected Jun 2027",
     icon: <GraduationCap className="text-purple-400" size={24} />,
     description: [
-      "Current CGPA: 7.0/10",
-      "Relevant coursework: Probability & Statistics, Linear Algebra, DBMS, Operating Systems, ML fundamentals."
+      "Current GPA: 7.0/10",
+      "Relevant coursework: Machine Learning, Deep Learning, Probability & Statistics, Linear Algebra, DBMS, Operating Systems."
     ]
   },
   {
-    title: "Leadership Roles",
-    company: "GLA University Campus Clubs",
-    date: "2023 - Present",
+    title: "Co-Curricular Leadership",
+    company: "GLA University",
+    date: "2023 – Present",
     icon: <Award className="text-emerald-400" size={24} />,
     description: [
       "Synergy Coordinator, Entrepreneurship Cell",
       "General Secretary, CSED Club",
-      "Supported coordination, communication, and event execution across student teams."
+      "Led cross-team coordination, tech initiatives, and collaborative university events."
     ]
   }
 ]
 
 const certifications = [
-  { title: "HP LIFE — Data Science & Analytics", date: "2024" },
-  { title: "Deloitte Australia — Technology Job Simulation", date: "2024" },
-  { title: "Generative AI & RAG System Development (Orvika AI)", date: "2025" },
-  { title: "AI Product Design & Architecture Experience", date: "2025" },
+  { title: "HP LIFE — Data Science & Analytics", date: "Certification Completed" },
+  { title: "Deloitte Australia — Technology Job Simulation", date: "Simulation Completed" },
+  { title: "Generative AI & RAG System Development (Orvika AI)", date: "May 2026" },
+  { title: "Computer Vision & Gesture Control (GestureWave AI)", date: "May 2026" },
 ]
 
 export default function Timeline() {

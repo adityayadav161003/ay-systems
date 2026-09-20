@@ -6,42 +6,42 @@ import { motion, Variants } from "framer-motion"
 const skillCategories = [
   {
     icon: "🧠",
-    title: "Generative AI",
-    skills: ["RAG", "LangChain", "Prompt Engineering", "AI Agents", "LLM Applications", "Vector Databases", "FAISS"],
+    title: "AI & NLP",
+    skills: ["LLM", "Agentic AI", "LangChain", "Generative AI", "RAG", "OpenAI APIs", "Vector Retrieval", "FAISS", "spaCy", "NLTK"],
   },
   {
     icon: "⚙️",
-    title: "Machine Learning",
-    skills: ["Scikit-Learn", "TensorFlow", "PyTorch", "Model Evaluation", "Feature Engineering"],
+    title: "Machine Learning & Deep Learning",
+    skills: ["PyTorch", "TensorFlow", "Neural Networks", "Deep Learning", "scikit-learn", "Model Evaluation", "Feature Engineering"],
   },
   {
-    icon: "💬",
-    title: "NLP",
-    skills: ["SpaCy", "NLTK", "Text Processing", "Semantic Search"],
+    icon: "📊",
+    title: "Data Analysis & Tools",
+    skills: ["Pandas", "NumPy", "Data Cleaning", "Exploratory Data Analysis (EDA)", "Analytical Skills", "SQL", "Excel (Pivot Tables)"],
+  },
+  {
+    icon: "💻",
+    title: "Web Development & Backend",
+    skills: ["React", "Tailwind CSS", "Node.js", "FastAPI", "MongoDB", "HTML", "CSS", "Bootstrap", "Spring Boot"],
+  },
+  {
+    icon: "⌨️",
+    title: "Programming Languages",
+    skills: ["Python", "Java", "SQL", "JavaScript"],
   },
   {
     icon: "👁",
     title: "Computer Vision",
-    skills: ["OpenCV", "MediaPipe"],
-  },
-  {
-    icon: "📊",
-    title: "Data Science",
-    skills: ["Pandas", "NumPy", "EDA", "Data Cleaning"],
-  },
-  {
-    icon: "💻",
-    title: "Programming",
-    skills: ["Python", "JavaScript", "SQL"],
+    skills: ["OpenCV", "MediaPipe", "Hand Tracking", "Gesture Recognition"],
   },
   {
     icon: "🛠",
-    title: "Tools",
-    skills: ["Git", "GitHub", "VS Code"],
+    title: "Tools & Automation",
+    skills: ["Git", "GitHub", "Meta WhatsApp Cloud API", "Webhooks", "VS Code"],
   },
 ]
 
-const currentlyWiring = ["Hugging Face Transformers", "FastAPI", "Docker", "MLflow", "Ollama", "Multi-Agent Systems"]
+const currentlyWiring = ["Multi-Agent Systems", "Ollama", "Docker", "Hugging Face", "Cloud LLMs", "Automation Workflows"]
 
 export default function Skills() {
   const categoryVariants: Variants = {
