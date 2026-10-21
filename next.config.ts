@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async rewrites() {
+    return {
+      // The portfolio home page is a self-contained static document.
+      beforeFiles: [{ source: "/", destination: "/portfolio/index.html" }],
+    };
+  },
 };
 
 export default nextConfig;
